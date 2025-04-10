@@ -1,0 +1,138 @@
+0
+4
+5
+6
+1
+2
+3
+YES
+42
+Mohidul 1 C 16 215 99
+Nahidul 2 A 15 215 80
+Sakib 10 D 16 200 70
+Mohidul 2 C 16 215 99
+Nahidul 1 A 15 215 80
+Sakib 1 D 16 200 70
+Mohidul 2 C 10 215 99
+Nahidul 2 A 7 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+SerialName   Class   Group    Age     Roll   Marks
+__________________________________________________________________________________________________
+__________________________________________________________________________________________________
+0 . Mohidul    1       C      16       215     99
+1 . Nahidul    2       A      15       215     80
+2 . Sakib    10       D      16       200     70
+3 . Mohidul    2       C      16       215     99
+4 . Nahidul    1       A      15       215     80
+5 . Sakib    1       D      16       200     70
+6 . Mohidul    2       C      10       215     99
+7 . Nahidul    2       A      7       215     80
+8 . Sakib    10       B      16       200     70
+9 . Mohidul    12       C      16       215     99
+10 . Nahidul    11       A      15       215     80
+11 . Sakib    10       B      16       200     70
+12 . Mohidul    12       C      16       215     99
+13 . Nahidul    11       A      15       215     80
+14 . Sakib    10       B      16       200     70
+15 . Mohidul    12       C      16       215     99
+16 . Nahidul    11       A      15       215     80
+17 . Sakib    10       B      16       200     70
+18 . Mohidul    12       C      16       215     99
+19 . Nahidul    11       A      15       215     80
+20 . Sakib    10       B      16       200     70
+21 . Mohidul    12       C      16       215     99
+22 . Nahidul    11       A      15       215     80
+23 . Sakib    10       B      16       200     70
+24 . Mohidul    12       C      16       215     99
+25 . Nahidul    11       A      15       215     80
+26 . Sakib    10       B      16       200     70
+27 . Mohidul    12       C      16       215     99
+28 . Nahidul    11       A      15       215     80
+29 . Sakib    10       B      16       200     70
+30 . Mohidul    12       C      16       215     99
+31 . Nahidul    11       A      15       215     80
+32 . Sakib    10       B      16       200     70
+33 . Mohidul    12       C      16       215     99
+34 . Nahidul    11       A      15       215     80
+35 . Sakib    10       B      16       200     70
+36 . Mohidul    12       C      16       215     99
+37 . Nahidul    11       A      15       215     80
+38 . Sakib    10       B      16       200     70
+39 . Mohidul    12       C      16       215     99
+40 . Nahidul    11       A      15       215     80
+41 . Sakib    10       B      16       200     70
+42 . Mohidul    12       C      16       215     99
+43 . Nahidul    11       A      15       215     80
+44 . Sakib    10       B      16       200     70
+45 . Mohidul    12       C      16       215     99
+46 . Nahidul    11       A      15       215     80
+47 . Sakib    10       B      16       200     70
+48 . Mohidul    12       C      16       215     99
+49 . Nahidul    11       A      15       215     80
+50 . Sakib    10       B      16       200     70
+51 . Mohidul    12       C      16       215     99
+52 . Nahidul    11       A      15       215     80
+53 . Sakib    10       B      16       200     70
+54 . Mohidul    12       C      16       215     99
+55 . Nahidul    11       A      15       215     80
+56 . Sakib    10       B      16       200     70
+57 . Mohidul    12       C      16       215     99
+58 . Nahidul    11       A      15       215     80
+59 . Sakib    10       B      16       200     70
+60 . Mohidul    12       C      16       215     99
+61 . Nahidul    11       A      15       215     80
+62 . Sakib    10       B      16       200     70

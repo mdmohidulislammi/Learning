@@ -1,0 +1,203 @@
+.top-para{
+   color: rgb(29, 242, 57);
+   /* margin-left: 5%; */
+   
+}
+.navigation{
+    height: 80px;
+    background-image: none, linear-gradient(45deg,black, blue);
+}
+.custom-form{
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: 2px dotted maroon;
+    padding: 5%;
+}
+.logo{
+    /* margin-left: 5%; */
+    width: 60px;
+
+}
+.custom{
+    gap: 15%;
+}
+.custom-area-navi{
+    margin-right: 10%;
+}
+
+.we{
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* margin-top: 15%; */
+    font-stretch: extra-expanded;
+    text-shadow: 5px 5px 8px blue;
+    font-size: 50px;
+    text-align: center;
+}
+.t{
+    margin-top: 10%;
+    color: rgb(70, 235, 58);
+    font-size: 40px;
+    font-weight: bold;
+    font-family:'Times New Roman', Times, serif;
+    margin-bottom: 5%;
+    text-shadow: 6px 6px 5px rgb(192, 15, 15);
+}
+.navi-left{
+    /* margin-top: 10%; */
+    margin-left: 5%;
+}
+.navi-right{
+    margin-left: 5%;
+}
+
+.intro{
+    /* gap: 5%; */
+    background-image: none, linear-gradient(45deg, rgb(133, 233, 133), rgb(119, 119, 225), rgb(254, 136, 136));
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.ban-but{
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(255, 15, 15);
+    background: transparent;
+    border-radius: 10px;
+    box-shadow: none;
+}
+.banner{
+    color: rgb(52, 210, 99);
+display: grid;
+justify-content: center;
+align-items: center;
+background-image: url(background\ 1.jpg), linear-gradient(45deg, blue, rgb(40, 40, 98), rgb(39, 77, 39), rgb(11, 38, 11), rgb(176, 176, 51));
+background-blend-mode:overlay;
+background-repeat: no-repeat;
+background-position: center;
+
+}
+.banner_row{
+    list-style-type : none;
+    height: 96%;
+}
+.left-ban{
+    /* margin-top: 10%; */
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+.right-ban{
+   margin-top: 10%;
+}
+.banner-img{
+    width: 99%;
+}
+.head1{
+    font-weight: bold;
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 50px;
+    color: rgb(249, 0, 0);
+    text-shadow: 5px 5px 5px rgb(64, 0, 255);
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+.head2{
+    font-size: 30px;
+    font-style: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(239, 251, 5);
+    text-shadow: none;
+    margin-top: 3%;
+}
+.see{
+    color: rgb(61, 245, 40);
+    /* background-color: rgb(12, 60, 21); */
+    font-size: 30px;
+    font-weight: bold;
+}
+.see-text{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    color: rgb(129, 8, 8);
+}
+.main{
+    gap: 10%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    /* margin: 2%; */
+    background-image: none, linear-gradient(45deg,  rgb(54, 38, 158), rgb(13, 62, 26));
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+.main-img{
+    width: 80%;
+    margin: 2%;
+}
+.service{
+    /* margin-left: 5%; */
+    margin: 5%;
+}
+.each-service{
+    border: 2px dotted gray;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;  
+    margin: 3%;
+}
+.hire-button{
+    color: black;
+    background-color: aqua;
+    font-weight: bold;
+    font-size: 20px;
+}
+.left-hire{
+    margin-top: 5%;
+}
+.right-hire{
+    margin-top: 5%;
+}
+.hiring{
+    color: rgb(251,157, 92);
+    text-shadow: 2px 2px 5px rgb(73, 35, 35);
+}
+.num{
+    margin-left: 5%;
+    font-size: 30px;
+}
+.footer{
+    background-color: black;
+    background-image: none, linear-gradient(45deg, rgb(34, 18, 175), rgb(47, 46, 109), rgb(108, 86, 248));
+}
+.foot{
+    padding: 3%;
+
+}
+.security-man{
+    color: rgb(251,157,92);
+    font-size: 20px;
+    font-weight: bold;
+}
+.foot-submit{
+    font-weight: bold;
+    width: 80px;
+    padding: 2%;
+    background-color: rgb(9, 98, 98);
+}
+.social-icons{
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    color: rgb(102, 75, 251);
+    margin: 5%;
+}

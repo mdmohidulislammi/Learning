@@ -1,0 +1,3 @@
+ali 25 100
+jobbar 24 99
+akib 23 95

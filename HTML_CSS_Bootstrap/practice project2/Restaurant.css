@@ -1,0 +1,89 @@
+.top-para{
+    color: rgb(29, 242, 57);
+    /* margin-left: 5%; */
+    
+ }
+ .navigation{
+     height: 80px;
+     background-image: none, linear-gradient(45deg,rgb(209, 53, 53), rgb(40, 34, 198));
+ }
+ .custom-form{
+     margin-left: 15%;
+     margin-right: 15%;
+     margin-top: 5%;
+     margin-bottom: 5%;
+     border: 2px dotted maroon;
+     padding: 5%;
+ }
+ .logo{
+     /* margin-left: 5%; */
+     width: 60px;
+ 
+ }
+ .custom{
+     gap: 15%;
+ }
+ .custom-area-navi{
+     margin-right: 10%;
+ }
+ .banner{
+    margin-bottom: 5%;
+display: flex;
+justify-content: center;
+ }
+ .ban-img{
+    /* display: flex; */
+    width: 400px;
+ }
+.card{
+    margin: 5%;
+}
+
+
+
+ .hire-button{
+     color: black;
+     background-color: aqua;
+     font-weight: bold;
+     font-size: 20px;
+ }
+ .left-hire{
+     margin-top: 5%;
+ }
+ .right-hire{
+     margin-top: 5%;
+ }
+ .hiring{
+     color: rgb(251,157, 92);
+     text-shadow: 2px 2px 5px rgb(73, 35, 35);
+ }
+ .num{
+     margin-left: 5%;
+     font-size: 30px;
+ }
+ .footer{
+     background-color: black;
+     background-image: none, linear-gradient(45deg, rgb(34, 18, 175), rgb(47, 46, 109), rgb(108, 86, 248));
+ }
+ .foot{
+     padding: 3%;
+ 
+ }
+ .security-man{
+     color: rgb(251,157,92);
+     font-size: 20px;
+     font-weight: bold;
+ }
+ .foot-submit{
+     font-weight: bold;
+     width: 80px;
+     padding: 2%;
+     background-color: rgb(9, 98, 98);
+ }
+ .social-icons{
+     display: flex;
+     justify-content: center;
+     gap: 10%;
+     color: rgb(102, 75, 251);
+     margin: 5%;
+ }

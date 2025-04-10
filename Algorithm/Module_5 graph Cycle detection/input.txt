@@ -1,0 +1,73 @@
+7 8
+5 6
+4 5
+0 4
+0 6
+1 0
+1 2
+2 3
+3 1
+Mohidul 1 C 16 215 99
+Nahidul 2 A 15 215 80
+Sakib 10 D 16 200 70
+Mohidul 2 C 16 215 99
+Nahidul 1 A 15 215 80
+Sakib 1 D 16 200 70
+Mohidul 2 C 10 215 99
+Nahidul 2 A 7 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+Mohidul 12 C 16 215 99
+Nahidul 11 A 15 215 80
+Sakib 10 B 16 200 70
+ami

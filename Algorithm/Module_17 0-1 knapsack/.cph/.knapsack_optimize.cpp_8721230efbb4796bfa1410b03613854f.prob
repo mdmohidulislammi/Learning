@@ -1,0 +1,1 @@
+{"name":"Local: knapsack_optimize","url":"e:\\phitron\\Algorithm\\Module_17 0-1 knapsack\\knapsack_optimize.cpp","tests":[{"id":1727759544185,"input":"3 8\n3 30\n4 50\n5 60","output":"90"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\phitron\\Algorithm\\Module_17 0-1 knapsack\\knapsack_optimize.cpp","group":"local","local":true}

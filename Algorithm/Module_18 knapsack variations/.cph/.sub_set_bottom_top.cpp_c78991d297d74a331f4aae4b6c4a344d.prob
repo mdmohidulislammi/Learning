@@ -1,0 +1,1 @@
+{"name":"Local: sub_set_bottom_top","url":"e:\\phitron\\Algorithm\\Module_18 knapsack variations\\sub_set_bottom_top.cpp","tests":[{"id":1728139736992,"input":"4\n1 2 3 6\n13","output":"YES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\phitron\\Algorithm\\Module_18 knapsack variations\\sub_set_bottom_top.cpp","group":"local","local":true}
