@@ -55,7 +55,10 @@ a = Book(101, 'Thermodynamics an Engineering Approach',
 b = Book(102, 'Thermodynamics', 'RS Khurmi', True)
 c = Book(131, 'Sociology', 'Shaefaer', True)
 d = Book(132, 'Physics for Engineers', 'Dr. Giuss Uddin', True)
+<<<<<<< HEAD
 print(Book.view_bookInfo(a))
+=======
+>>>>>>> f9ddbb6 (Adding new files after learning)
 while True:
     print("\n-------------------------------------------------------------------------------------------------------------\n")
     print('  1. View All Books\n  2. Borrow Book\n  3. Return Book\n  4. Exit')

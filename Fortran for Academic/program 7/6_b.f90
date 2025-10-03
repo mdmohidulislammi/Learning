@@ -1,0 +1,10 @@
+REAL MONEY, CYLINDER
+PRINT*, "Enter the amount of Money: "
+READ*, MONEY
+PRINT*, "Enter the Cylinder number : "
+READ *, CYLINDER
+IF (MONEY .GT. 75000 .AND. CYLINDER .EQ. 8) THEN
+PRINT*, "CANNOT BUY"
+ENDIF
+STOP
+END

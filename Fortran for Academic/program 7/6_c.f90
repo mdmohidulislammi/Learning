@@ -1,0 +1,12 @@
+REAL TIME, MILG, COSTS
+PRINT*, "Enter the time: "
+READ* , TIME
+PRINT*, "Enter the Milage : "
+READ*, MILG
+PRINT*, "Enter the costs: "
+READ*, COSTS
+IF (TIME .LT. 2 .AND. MILG .GE. 15 .AND. COSTS .LE. 40000) THEN
+PRINT*, "HOT CAR"
+ENDIF
+STOP 
+END

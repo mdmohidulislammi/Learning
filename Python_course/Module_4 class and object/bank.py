@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Bank:
     def __init__(self, balance):
         self.balance=balance
@@ -23,3 +24,34 @@ brac.withdraw(25)
 brac.withdraw(25000000)
 brac.withdraw(10000)
             
+=======
+class Bank: 
+    def __init__(self, balance):
+        self.balance=balance
+        self.min_with=200
+        self.max_with=1000000
+    def show_balance(self):
+        return self.balance
+    def deposite(self, amount):
+        self.balance+=amount
+        return self.balance
+    def withdraw(self, amount):
+        if(amount>self.balance+self.min_with):
+            print("You have insufficient balance. Please try again")
+            return self.balance
+        elif(amount<self.min_with):
+            print("You can not withdraw this little amount. Please try again...")
+            return self.balance
+        elif(amount>self.max_with):
+            print("You cross the limit. Please try again...")
+            return  self.balance
+        else:
+            self.balance-=amount
+            print(f'Withdraw successful. Here is your current balance {self.balance}')
+            return "Thanks for reaching us."
+    
+Brac=Bank(15000)
+Brac.deposite(15000)
+print(Brac.withdraw(100000))
+print(Brac.balance)
+>>>>>>> f9ddbb6 (Adding new files after learning)

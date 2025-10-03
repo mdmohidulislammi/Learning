@@ -1,0 +1,2 @@
+Please Enter two number : Here is your result : 540.500
+Thanks for using my program

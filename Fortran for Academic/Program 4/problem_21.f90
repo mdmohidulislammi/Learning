@@ -1,0 +1,21 @@
+REAL P_MONEY, TIME,SIMPLE_INT, COMPOUND_18, COMPOUND_15,INTEREST1, INTEREST2, INTEREST3
+P_MONEY=5000
+TIME=5
+SIMPLE_INT=20
+COMPOUND_18=18
+COMPOUND_15=15
+INTEREST1= (P_MONEY*SIMPLE_INT*TIME)/100
+INTEREST2 = P_MONEY*(1 + COMPOUND_18/100)**TIME
+INTEREST3 = P_MONEY* (1+COMPOUND_15/100)**(TIME*2)
+IF (INTEREST1 .GT. INTEREST2 .AND. INTEREST1 .GT. INTEREST3) THEN
+    PRINT *, "The simple interest is suitable for him."
+    PRINT*, "The interest after 5 years is : ",INTEREST1
+ELSEIF (INTEREST12 .GT. INTEREST1 .AND. INTEREST12 .GT. INTEREST3) THEN
+    PRINT*, "The compound interest of 18% is suitable for him."
+    PRINT*, "The interest after 5 years is : ", INTEREST2
+ELSE 
+    PRINT*, "The compound interest of 15% is suitable for him."
+    PRINT*, "The interest after 5 years is : ", INTEREST3
+END IF   
+STOP 
+END 

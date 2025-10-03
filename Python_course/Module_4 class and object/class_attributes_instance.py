@@ -18,6 +18,13 @@ man2.add_cart('Sunglass')
 
 print(man1.instance_cart)
 print(man2.instance_cart)
+<<<<<<< HEAD
 
 print(man1.class_cart)
 print(man2.class_cart)        
+=======
+""" Now print specific cart because it is an instance attribute which is declared """
+print(man1.class_cart)
+print(man2.class_cart)       
+""" Now print all things which have two object specifically added but show same cart because it is class attribute. """ 
+>>>>>>> f9ddbb6 (Adding new files after learning)

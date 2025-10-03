@@ -1,0 +1,31 @@
+.main{
+    display: flex;
+    justify-content: space-around;
+}
+.cart{
+    width: 70%;
+    box-shadow: 4px 6px 8px #4285F4;
+    margin: auto;
+    text-align: center;
+}
+.product{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+.card{
+    padding: 10px;
+    border: 2px solid rebeccapurple;
+}
+.card-img{
+    width: 200px;
+    height: 200px;
+}
+.cart-info{
+    display: flex;
+    justify-content: space-around;
+}

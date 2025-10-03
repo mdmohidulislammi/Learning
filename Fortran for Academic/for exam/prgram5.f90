@@ -1,0 +1,11 @@
+DIMENSION X(-4:4)
+INTEGER X
+   DO 10 J= -4, 4
+    READ*, X(J)
+10 CONTINUE 
+    DO 20 I =-4, 4
+    PRINT*, "INDEX : ", I  , "THIS IS VALUE : ", X(I)
+20 CONTINUE
+
+STOP 
+END 

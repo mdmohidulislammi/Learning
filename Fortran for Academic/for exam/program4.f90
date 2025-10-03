@@ -1,0 +1,17 @@
+  FUNCTION SQR(P,Q)
+ SQR =P**2 + Q**2
+ RETURN 
+ END  
+ 
+ REAL A,B, SUM
+ READ*, A,B
+ SUM=SQR(A,B)+5
+ PRINT*, SUM 
+ STOP 
+ END 
+
+
+!  FUNCTION SQR(P,Q)
+!  SQR =P**2 + Q**2
+!  RETURN 
+!  END 
