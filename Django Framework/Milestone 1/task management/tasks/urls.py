@@ -1,6 +1,7 @@
 from django.urls import path 
-from tasks.views import home
+from tasks.views import manager,users
 
 urlpatterns = [
-    path('show-task/', home),
+  path('manager/', manager)  , 
+  path('users/', users),
 ]
