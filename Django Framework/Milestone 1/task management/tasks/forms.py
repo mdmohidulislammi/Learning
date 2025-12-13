@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task
+from tasks.models import Task, TaskDetail
 # Django Basic form
 # class TaskForm(forms.Form):
 #     title=forms.CharField(max_length=100)
@@ -20,7 +20,7 @@ from tasks.models import Task
 class TaskModelForm(forms.ModelForm):
     class Meta:
         model=Task
-        fields=['title', 'description', 'due_date', 'assigned_to', 'is_completed', 'project']
+        fields=['title', 'description', 'due_date', 'assigned_to',]
         #exclude=['project', 'due_date', 'updated_at']
         widgets={
             'due_date': forms.SelectDateWidget,
@@ -28,5 +28,13 @@ class TaskModelForm(forms.ModelForm):
             'title':forms.TextInput(attrs={
             }) 
         }
+    def __init__(self, *arg, **kwargs):
+        super().__init__(*arg, **kwargs)
+        # self.apply_styled_widgets()
+
+class TaskDetailForm(forms.ModelForm):
+    class Meta:
+        model=TaskDetail
+        fields=['priority', 'notes']
 
 

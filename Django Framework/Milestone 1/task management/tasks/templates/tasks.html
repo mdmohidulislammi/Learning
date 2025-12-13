@@ -10,13 +10,20 @@
 </head>
 <body >
    <div class="w-1/2 mx-auto mt-12 m-auto items-center justify-center ">
+    <div>
+      {% if messages %}
+      {% for message in messages %}
+      <div> {{message}} </div>
+      {% endfor %}
+      {% endif %}
+    </div>
     
-    
-         <form action="" method="POST" class="border border-rose-600 shadow-2xl m-auto p-6" >
-        <input type="text" placeholder="Enter the text..." class="border border-red-600  rounded-lg shadow-lime-700 focus:border-rose-500">
+         <form action="" method="POST" class="" >
+        <!-- <input type="text" placeholder="Enter the text..." class="border border-red-600  rounded-lg shadow-lime-700 focus:border-rose-500"> -->
         {% csrf_token %}
-       {{form}}
-       <button class="submit">Submit</button>
+       {{task_form}}
+       {{task_detail_form}}
+       <button class="border border-rose-600 shadow-2xl m-auto p-2 bg-blue-600 font-bold">Submit</button>
     </form>
    </div>
 </body>
