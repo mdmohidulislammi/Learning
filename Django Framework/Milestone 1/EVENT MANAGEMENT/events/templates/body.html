@@ -16,7 +16,7 @@
             <h1 class="hover:text-green-200 cursor-pointer font-semibold"><a href="">Services</a></h1>
             <h1 class="hover:text-green-200 cursor-pointer font-semibold"><a href="">Contact</a></h1>
           </div>
-          <div class=" col-start-8 p-2 col-end-8 flex justify-center align-center font-bold text-sm">
+          <div class="col-start-8 p-2 col-end-8 flex justify-center align-center font-bold text-sm">
             <button class="text-blue-600 bg-white p-3 rounded-full  hover:bg-gray-200 hover:text-green-400"><a href="login.html">LogIn/Register</a></button>
           </div>
         </div>
@@ -25,9 +25,253 @@
 
     <!-- MAIN -->
     <main>
-        
+        <!-- Stats grid -->
+      <div class="flex m-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <!-- Total tasks -->
+          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+            <h3 class="text-sm font medium text-gray-500 mb-4">TOTAL TASK</h3>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-3xl font-semibold mb-3">3</p>
+                <p class="text-gray-500 text-sm">11 last month</p>
+              </div>
+              <div class="bg-blue-100 rounded-full p-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-6 h-6 text-blue-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
 
-        
+          <!-- second completed task -->
+          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+            <h3 class="text-sm font medium text-gray-500 mb-4">
+              COMPLETED TASK
+            </h3>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-3xl font-semibold mb-3">3</p>
+                <p class="text-gray-500 text-sm">11 last month</p>
+              </div>
+              <div class="bg-blue-100 rounded-full p-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-6 h-6 text-green-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- TASK IN PROGRESS-->
+          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+            <h3 class="text-sm font medium text-gray-500 mb-4">
+              TASK IN PROGRESS
+            </h3>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-3xl font-semibold mb-3">3</p>
+                <p class="text-gray-500 text-sm">11 last month</p>
+              </div>
+              <div class="bg-yellow-100 rounded-full p-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  class="w-6 h-6 text-blue-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- TO DOS -->
+          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+            <h3 class="text-sm font medium text-gray-500 mb-4">TO DOS</h3>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-3xl font-semibold mb-3">3</p>
+                <p class="text-gray-500 text-sm">11 last month</p>
+              </div>
+              <div class="bg-purple-100 rounded-full p-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="w-6 h-6 text-purple-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Details sections -->
+
+        <div class="bg-white m-8 rounded-xl shadow-sm">
+          <div
+            class="grid grid-cols-4 p-4 border-b border-gray-100 text-sm text-gray-500"
+          >
+            <div>TASK TITLE</div>
+            <div>PRIORITY</div>
+            <div>TEAM</div>
+            <div>CREATED AT</div>
+          </div>
+          <!-- task items 1-->
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-4 p-4 gap-4 items-center">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span> Test Low Task</span>
+              </div>
+              <div>
+                <span
+                  class="px-3 rounded-full bg-blue-50 text-blue-500 py-1 text-sm"
+                  >Low</span
+                >
+              </div>
+              <div>
+                <div class="flex -space-x-2">
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    CA
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    JS
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    B
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="text-gray-500">9 months ago</span>
+              </div>
+            </div>
+          </div>
+          <!-- items two -->
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-4 p-4 gap-4 items-center">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <span> Test task</span>
+              </div>
+              <div>
+                <span
+                  class="px-3 rounded-full bg-blue-50 text-black-100 py-1 text-sm"
+                  >Normal</span
+                >
+              </div>
+              <div>
+                <div class="flex -space-x-2">
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    AJ
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    EV
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    B
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="text-gray-500">9 months ago</span>
+              </div>
+            </div>
+          </div>
+          <!-- items three -->
+          <div class="divide-y divide-gray-100">
+            <div class="grid grid-cols-4 p-4 gap-4 items-center">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <span> Test task</span>
+              </div>
+              <div>
+                <span
+                  class="px-3 rounded-full bg-red-50 text-red-500 py-1 text-sm"
+                  >High</span
+                >
+              </div>
+              <div>
+                <div class="flex -space-x-2">
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    CA
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    JS
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    AJ
+                  </div>
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+                  >
+                    B
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="text-gray-500">10 months ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
     </main>
     <!-- FOOTER -->
     <footer></footer>
