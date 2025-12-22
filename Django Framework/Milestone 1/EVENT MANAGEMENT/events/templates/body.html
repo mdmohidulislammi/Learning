@@ -5,13 +5,12 @@
 
         <!-- Stats grid -->
       <div class="flex m-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <!-- Total tasks -->
+          <!-- Total EVENTS -->
           <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
-            <h3 class="text-sm font medium text-gray-500 mb-4">TOTAL TASK</h3>
+            <h3 class="text-sm font medium text-gray-500 mb-4">TOTAL EVENTS</h3>
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-3xl font-semibold mb-3 text-black">3</p>
-                <p class="text-gray-500 text-sm">11 last month</p>
               </div>
               <div class="bg-blue-100 rounded-full p-3">
                 <svg
@@ -32,15 +31,14 @@
             </div>
           </div>
 
-          <!-- second completed task -->
+          <!-- second completed EVENTS -->
           <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">
-              COMPLETED TASK
+              COMPLETED EVENTS
             </h3>
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-3xl font-semibold mb-3 text-black">3</p>
-                <p class="text-gray-500 text-sm">11 last month</p>
               </div>
               <div class="bg-blue-100 rounded-full p-3">
                 <svg
@@ -61,15 +59,15 @@
             </div>
           </div>
 
-          <!-- TASK IN PROGRESS-->
+          <!--  IN PROGRESS-->
           <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">
-              TASK IN PROGRESS
+              TODAY'S EVENT
             </h3>
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-3xl font-semibold mb-3 text-black">3</p>
-                <p class="text-gray-500 text-sm">11 last month</p>
+              
               </div>
               <div class="bg-yellow-100 rounded-full p-3">
                 <svg
@@ -90,13 +88,12 @@
             </div>
           </div>
 
-          <!-- TO DOS -->
+          <!-- UPCOMING -->
           <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
-            <h3 class="text-sm font medium text-gray-500 mb-4">TO DOS</h3>
+            <h3 class="text-sm font medium text-gray-500 mb-4">UPCOMING</h3>
             <div class="flex justify-between items-start">
               <div>
                 <p class="text-3xl font-semibold mb-3 text-black">3</p>
-                <p class="text-gray-500 text-sm">11 last month</p>
               </div>
               <div class="bg-purple-100 rounded-full p-3">
                 <svg
@@ -120,28 +117,46 @@
         </div>
 
 
+        {% comment %} Search BAR {% endcomment %}
+         <div class="w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto px-2">
+    <input
+        type="text"
+        placeholder="Enter event name or location..."
+        class="w-full px-4 py-3 sm:py-4
+               rounded-full
+               bg-white text-black placeholder-black
+               border border-gray-300
+               focus:outline-none focus:ring-2 focus:ring-green-400
+               focus:border-green-400
+               transition">
+</div>
+
         <!-- Details sections -->
+         
 
         <div class="bg-white m-8 rounded-xl shadow-sm">
           <div
             class="grid grid-cols-4 p-4 border-b border-gray-100 text-sm text-gray-500"
           >
-            <div>TASK TITLE</div>
-            <div>PRIORITY</div>
-            <div>TEAM</div>
-            <div>CREATED AT</div>
+            <div>EVENT TITLE</div>
+            <div>CATEGORY</div>
+            <div>PARTICIPANTS</div>
+            <div>DATE</div>
           </div>
           <!-- task items 1-->
           <div class="divide-y divide-gray-100">
             <div class="grid grid-cols-4 p-4 gap-4 items-center">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 bg-green-500 rounded-full text-black"></div>
-                <span class="text-black"> Test Low Task</span>
+                <span class="text-black"> Wedding </span>
+               
+                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
+                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
               </div>
               <div>
                 <span
                   class="px-3 rounded-full bg-blue-50 text-blue-500 py-1 text-sm"
-                  >Low</span
+                  >General</span
                 >
               </div>
               <div>
@@ -164,7 +179,7 @@
                 </div>
               </div>
               <div>
-                <span class="text-gray-500">9 months ago</span>
+                <span class="text-gray-500">12/11/2025</span>
               </div>
             </div>
           </div>
@@ -173,11 +188,13 @@
             <div class="grid grid-cols-4 p-4 gap-4 items-center">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                <span class="text-black"> Test task</span>
+                <span class="text-black"> ICPC Contest</span>
+                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
+                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
               </div>
               <div>
                 <span
-                  class="px-3 rounded-full bg-blue-100 text-black py-1 text-sm" >Normal</span>
+                  class="px-3 rounded-full bg-blue-100 text-black py-1 text-sm" >Technology</span>
               </div>
               <div>
                 <div class="flex -space-x-2">
@@ -199,7 +216,7 @@
                 </div>
               </div>
               <div>
-                <span class="text-gray-500">9 months ago</span>
+                <span class="text-gray-500">01/01/2026</span>
               </div>
             </div>
           </div>
@@ -208,12 +225,14 @@
             <div class="grid grid-cols-4 p-4 gap-4 items-center">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span class="text-black"> Test task</span>
+                <span class="text-black"> Picnic </span>
+                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
+                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
               </div>
               <div>
                 <span
                   class="px-3 rounded-full bg-red-50 text-red-500 py-1 text-sm"
-                  >High</span
+                  >General</span
                 >
               </div>
               <div>
@@ -241,10 +260,11 @@
                 </div>
               </div>
               <div>
-                <span class="text-gray-500">10 months ago</span>
+                <span class="text-gray-500">11/12/2025</span>
               </div>
             </div>
           </div>
+          <button class="bg-green-400 rounded-xl p-2 font-semibold">Add Event </button>
         </div>
 
 {% endblock body %}

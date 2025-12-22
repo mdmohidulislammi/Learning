@@ -8,7 +8,7 @@ from events.forms import Event_form, Category_Details, Participant_form
 
 
 def organizer_dashboard(request):
-    return render(request, 'login.html')
+    return render(request, 'body.html')
 
 def create_event(request):
     if request.method=='POST':
