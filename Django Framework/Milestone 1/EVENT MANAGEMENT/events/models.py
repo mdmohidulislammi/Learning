@@ -1,7 +1,7 @@
 from django.db import models
 
 class Event(models.Model):
-    name=models.CharField(max_length=200)
+    event_name=models.CharField(max_length=200)
     description=models.TextField()
     date=models.DateField()
     time=models.TimeField()
@@ -10,13 +10,13 @@ class Event(models.Model):
     
 
     def __str__(self) -> str:
-        return self.name
+        return self.event_name
     
 class Category(models.Model):
-    name=models.CharField(max_length=100)
+    Category_name=models.CharField(max_length=100, default='General')
     description=models.TextField(blank=True,null=True)
     def __str__(self) -> str:
-        return self.name
+        return self.Category_name
 
 class Participant(models.Model):
     name=models.CharField(max_length=100)

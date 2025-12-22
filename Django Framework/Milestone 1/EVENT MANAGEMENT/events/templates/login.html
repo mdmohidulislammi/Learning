@@ -1,36 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event Management</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  </head>
-  <body class="bg-[linear-gradient(60deg,#2E1F1B,#5E4B43)] w-full">
-    <header>
-      <nav>
-        <div class="text-white grid grid-cols-8 gap-2 p-5">
-          <div class="col-start-1 font-semibold text-xl p-5 flex justify-center items-center w-full bg-green-500 rounded-full ">Logo</div>
-          <div class="text-lg flex col-start-2 col-end-8 gap-6 center justify-center p-2  items-center">
-            <h1 class="hover:text-green-200 cursor-pointer font-semibold"><a href="index.html">Home</a></h1>
-            <h1 class="hover:text-green-200 cursor-pointer font-semibold"><a href="">Services</a></h1>
-            <h1 class="hover:text-green-200 cursor-pointer font-semibold"><a href="">Contact</a></h1>
-          </div>
-          <div class=" col-start-8 p-2 col-end-8 flex justify-center align-center font-bold text-sm">
-            <button class="text-blue-600 bg-white p-3 rounded-full  hover:bg-gray-200 hover:text-green-400"><a href="">LogIn/Register</a></button>
-          </div>
-        </div>
-      </nav>
-    </header>
-     <div class="w-1/2 bg-gray-500 flex justify-center items-center m-auto p-2 rounded-xl">
-        <form action="" class="w-full m-6 grid grid-cols-6 gap-4 flex justify-center items-center">
-            <input type="text" placeholder="Type username..." class="flex justify-center items-center bg-white p-4 rounded-full font-semibold  col-span-4 col-start-2" >
-            <input type="password" placeholder="Enter your password..." class="bg-white p-4 rounded-full font-semibold col-span-4 col-start-2">
-            <button class="text-blue-800 bg-green-500 w-full col-span-4 col-start-2 p-4 rounded-3xl font-bold hover:bg-green-300">Log In</button>
-           <a href="" class="text-white font-semibold col-span-4 col-start-2 p-4 w-full hover:text-blue-800"> <h1>Forgotten Password? </h1></a>
-           <button class="text-white bg-green-800 p-4 w-1/2 col-span-4 col-start-3 hover:bg-green-900 font-bold rounded-xl">Or, Register</button>
-        </form>
-     </div>
 
-  </body>
-</html>
+  {% extends "base.html" %}
+  {% block login %}
+ <div class="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl 
+            bg-gray-500 flex justify-center items-center 
+            mx-auto p-4 sm:p-6 rounded-xl">
+
+    <form class="w-full grid grid-cols-1 sm:grid-cols-6 gap-4">
+
+        <!-- Username -->
+        <input
+            type="text"
+            placeholder="Type username..."
+            class="bg-white p-3 sm:p-4 rounded-full font-semibold
+                   sm:col-span-4 sm:col-start-2 w-full">
+
+        <!-- Password -->
+        <input
+            type="password"
+            placeholder="Enter your password..."
+            class="bg-white p-3 sm:p-4 rounded-full font-semibold
+                   sm:col-span-4 sm:col-start-2 w-full"
+        >
+
+        <!-- Login Button -->
+        <button
+            class="text-blue-800 bg-green-500 w-full
+                   sm:col-span-4 sm:col-start-2
+                   p-3 sm:p-4 rounded-3xl font-bold
+                   hover:bg-green-300 transition">  Log In </button>
+
+        <!-- Forgot Password -->
+        <a
+            href="#"
+            class="text-white font-semibold text-center
+                   sm:col-span-4 sm:col-start-2
+                   hover:text-blue-800 transition"
+        >
+            Forgotten Password?
+        </a>
+
+        <!-- Register Button -->
+        <button
+            class="text-white bg-green-800 p-3 sm:p-4
+                   w-full sm:w-1/2
+                   sm:col-span-4 sm:col-start-3
+                   hover:bg-green-900 font-bold rounded-xl transition"
+        >
+            Or, Register
+        </button>
+
+    </form>
+</div>
+
+{% endblock login %}
