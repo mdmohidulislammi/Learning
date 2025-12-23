@@ -3,7 +3,7 @@ from django.db import models
 class Event(models.Model):
     event_name=models.CharField(max_length=200)
     description=models.TextField()
-    date=models.DateField()
+    due_date=models.DateField()
     time=models.TimeField()
     location=models.TextField()
     category=models.ForeignKey("Category", on_delete=models.CASCADE,default=1)

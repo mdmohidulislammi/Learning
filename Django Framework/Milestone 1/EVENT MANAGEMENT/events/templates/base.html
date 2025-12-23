@@ -17,24 +17,28 @@
         <div class="flex items-center justify-between md:grid md:grid-cols-8 md:gap-2">
 
           <!-- LOGO -->
-          <div class="font-semibold text-xl px-5 py-3 bg-green-500 rounded-full flex justify-center items-center
+          <div class="font-semibold text-xl px-5 py-3 bg-green-500 rounded-3xl flex justify-center items-center
                       md:col-start-1">
             Logo
           </div>
 
           <!-- NAV LINKS (HIDDEN ON MOBILE) -->
           <div class="hidden md:flex md:col-start-2 md:col-end-8 gap-6 justify-center items-center text-lg">
-            <a href="#" class="hover:text-green-200 font-semibold">Home</a>
+            <a href=" {% url 'home' %}?type=home" class="hover:text-green-200 font-semibold" >Home</a>
             <a href="#" class="hover:text-green-200 font-semibold">Services</a>
             <a href="#" class="hover:text-green-200 font-semibold">Contact</a>
           </div>
 
           <!-- LOGIN BUTTON -->
           <div class="hidden md:flex md:col-start-8 justify-center">
-            <button class="text-blue-600 bg-white px-4 py-2 rounded-full font-bold
-                           hover:bg-gray-200 hover:text-green-400">
-              LogIn / Register
-            </button>
+            <div class="flex gap-2 m-4">
+           <button class="mt-2 text-blue-600 bg-white px-4 py-2 rounded-xl font-semibold">
+            LogIn
+          </button>
+           <button class="mt-2 text-blue-600 bg-white px-4 py-2 rounded-xl font-semibold">
+            Register
+          </button>
+         </div>
           </div>
 
           <!-- MOBILE MENU BUTTON -->
@@ -49,9 +53,14 @@
           <a href="#" class="hover:text-green-200 font-semibold">Home</a>
           <a href="#" class="hover:text-green-200 font-semibold">Services</a>
           <a href="#" class="hover:text-green-200 font-semibold">Contact</a>
-          <button class="mt-2 text-blue-600 bg-white px-4 py-2 rounded-full font-bold">
-            LogIn / Register
+         <div class="flex gap-3 justify-center items-center ">
+           <button class="mt-2 text-blue-600 bg-white px-4 py-2 rounded-xl font-semibold">
+            LogIn
           </button>
+           <button class="mt-2 text-blue-600 bg-white px-4 py-2 rounded-xl font-semibold">
+            Register
+          </button>
+         </div>
         </div>
 
       </nav>
@@ -71,7 +80,7 @@
 
     <!-- FOOTER -->
     <footer class="text-center text-white p-4 opacity-80">
-      © 2025 Event Management
+      © {{current_year}} Event Management
     </footer>
 
 

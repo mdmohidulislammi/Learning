@@ -6,11 +6,15 @@
         <!-- Stats grid -->
       <div class="flex m-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <!-- Total EVENTS -->
+         <a href="{% url 'organizer_dashboard' %}?type=total">
+
           <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">TOTAL EVENTS</h3>
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-3xl font-semibold mb-3 text-black">3</p>
+                <p class="text-3xl font-semibold mb-3 text-black">
+                 {{counts.total}} 
+                </p>
               </div>
               <div class="bg-blue-100 rounded-full p-3">
                 <svg
@@ -31,14 +35,19 @@
             </div>
           </div>
 
+         </a>
+
           <!-- second completed EVENTS -->
-          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+        <a href="{% url 'organizer_dashboard' %}?type=completed">
+ <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">
               COMPLETED EVENTS
             </h3>
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-3xl font-semibold mb-3 text-black">3</p>
+                <p class="text-3xl font-semibold mb-3 text-black">
+                  {{counts.completed}}
+                </p>
               </div>
               <div class="bg-blue-100 rounded-full p-3">
                 <svg
@@ -59,14 +68,19 @@
             </div>
           </div>
 
-          <!--  IN PROGRESS-->
-          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+         </a>
+
+          <!--  Today's Event-->
+          <a href="{% url 'organizer_dashboard' %}?type=today">
+ <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">
               TODAY'S EVENT
             </h3>
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-3xl font-semibold mb-3 text-black">3</p>
+                <p class="text-3xl font-semibold mb-3 text-black">
+                  {{counts.events_today}}
+                </p>
               
               </div>
               <div class="bg-yellow-100 rounded-full p-3">
@@ -88,12 +102,17 @@
             </div>
           </div>
 
+
+         </a>
           <!-- UPCOMING -->
-          <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
+        <a href="{% url 'organizer_dashboard' %}?type=in_progress">
+ <div class="bg-white rounded-xl p-6 shadow-md hover:bg-gray-200">
             <h3 class="text-sm font medium text-gray-500 mb-4">UPCOMING</h3>
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-3xl font-semibold mb-3 text-black">3</p>
+                <p class="text-3xl font-semibold mb-3 text-black">
+                  {{counts.in_progress}}
+                </p>
               </div>
               <div class="bg-purple-100 rounded-full p-3">
                 <svg
@@ -114,6 +133,8 @@
             </div>
           </div>
 
+         </a>
+
         </div>
 
 
@@ -127,8 +148,7 @@
                bg-white text-black placeholder-black
                border border-gray-300
                focus:outline-none focus:ring-2 focus:ring-green-400
-               focus:border-green-400
-               transition">
+               focus:border-green-400 transition">
 </div>
 
         <!-- Details sections -->
@@ -136,135 +156,84 @@
 
         <div class="bg-white m-8 rounded-xl shadow-sm">
           <div
-            class="grid grid-cols-4 p-4 border-b border-gray-100 text-sm text-gray-500"
-          >
+            class="grid grid-cols-4 p-4 border-b border-gray-100 text-sm text-gray-500">
             <div>EVENT TITLE</div>
             <div>CATEGORY</div>
             <div>PARTICIPANTS</div>
             <div>DATE</div>
           </div>
           <!-- task items 1-->
-          <div class="divide-y divide-gray-100">
-            <div class="grid grid-cols-4 p-4 gap-4 items-center">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-green-500 rounded-full text-black"></div>
-                <span class="text-black"> Wedding </span>
-               
-                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
-                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
-              </div>
-              <div>
-                <span
-                  class="px-3 rounded-full bg-blue-50 text-blue-500 py-1 text-sm"
-                  >General</span
-                >
-              </div>
-              <div>
-                <div class="flex -space-x-2">
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    CA
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    JS
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    B
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span class="text-gray-500">12/11/2025</span>
-              </div>
-            </div>
-          </div>
-          <!-- items two -->
-          <div class="divide-y divide-gray-100">
-            <div class="grid grid-cols-4 p-4 gap-4 items-center">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                <span class="text-black"> ICPC Contest</span>
-                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
-                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
-              </div>
-              <div>
-                <span
-                  class="px-3 rounded-full bg-blue-100 text-black py-1 text-sm" >Technology</span>
-              </div>
-              <div>
-                <div class="flex -space-x-2">
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    AJ
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    EV
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    B
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span class="text-gray-500">01/01/2026</span>
-              </div>
-            </div>
-          </div>
-          <!-- items three -->
-          <div class="divide-y divide-gray-100">
-            <div class="grid grid-cols-4 p-4 gap-4 items-center">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span class="text-black"> Picnic </span>
-                <button class="bg-red-500 rounded-sm p-2 font-semibold">Delete</button>
-                <button class="bg-blue-500 rounded-sm p-2 font-semibold">Update</button>
-              </div>
-              <div>
-                <span
-                  class="px-3 rounded-full bg-red-50 text-red-500 py-1 text-sm"
-                  >General</span
-                >
-              </div>
-              <div>
-                <div class="flex -space-x-2">
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    CA
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    JS
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    AJ
-                  </div>
-                  <div
-                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
-                  >
-                    B
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span class="text-gray-500">11/12/2025</span>
-              </div>
-            </div>
-          </div>
-          <button class="bg-green-400 rounded-xl p-2 font-semibold">Add Event </button>
-        </div>
+
+     {% for event in events %}
+
+
+         <div class="divide-y divide-gray-200 bg-white rounded-xl shadow-sm">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 items-center">
+
+    <!-- Event Name -->
+
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+      <span class="font-medium text-black whitespace-nowrap">
+     
+      {{event.event_name}}
+
+      </span>
+
+
+      <div class="flex gap-2">
+       <a href="{% url 'delete_event' event.id %}">
+         <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">
+        Delete
+      </button>
+       </a>
+      <a href="{% url 'update_event' event.id %}">
+        <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm">
+        Update
+      </button>
+      </a>
+      </div>
+      
+    </div>
+
+    <!-- Category -->
+    <div>
+      <span
+        class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-500 text-sm"
+      >
+        
+        {{event.category}}
+       
+      </span>
+    </div>
+
+    <!-- Participants -->
+    <div class="flex -space-x-2">
+      {% for participant in event.participant.all %}
+      <div
+        class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm border-2 border-white"
+      >
+      
+      {{participant.name|slice:":1"}}
+     
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Date -->
+    <div class="text-gray-500 text-sm lg:text-right">
+      {{event.due_date}}
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<a href="{% url 'create-event' %}">
+  <button  class="mt-4 bg-green-500 text-white rounded-xl px-4 py-2 font-semibold w-full sm:w-auto">
+  Add Event
+</button>
+</a>
+
 
 {% endblock body %}

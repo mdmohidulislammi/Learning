@@ -5,8 +5,7 @@ INPUT_CLASS = (
     "w-full px-4 py-3 rounded-lg border border-gray-300 "
     "focus:outline-none focus:ring-2 focus:ring-green-400 "
     "focus:border-green-400"
-     "bg-white text-black placeholder-gray-200 "
-)
+     "bg-white text-black placeholder-gray-200 ")
 
 
 class Participant_form(forms.ModelForm):
@@ -20,37 +19,31 @@ class Participant_form(forms.ModelForm):
             }),
             'email': forms.EmailInput(attrs={
                 'class': INPUT_CLASS,
-                'placeholder': 'Enter email address'
-            }),
+                'placeholder': 'Enter email address'}),
         }
 
 
 class Event_form(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['event_name', 'description', 'date', 'time', 'location']
+        fields = ['event_name', 'description', 'due_date', 'time', 'location']
         widgets = {
             'event_name': forms.TextInput(attrs={
                 'class': INPUT_CLASS,
-                'placeholder': 'Event name'
-            }),
+                'placeholder': 'Event name'}),
             'description': forms.Textarea(attrs={
                 'class': INPUT_CLASS,
                 'placeholder': 'Event description',
-                'rows': 4
-            }),
-            'date': forms.DateInput(attrs={
+                'rows': 4}),
+            'due_date': forms.DateInput(attrs={
                 'type': 'date',
-                'class': INPUT_CLASS
-            }),
+                'class': INPUT_CLASS}),
             'time': forms.TimeInput(attrs={
                 'type': 'time',
-                'class': INPUT_CLASS
-            }),
+                'class': INPUT_CLASS}),
             'location': forms.TextInput(attrs={
                 'class': INPUT_CLASS,
-                'placeholder': 'Event location'
-            }),
+                'placeholder': 'Event location'}),
         }
 
 
