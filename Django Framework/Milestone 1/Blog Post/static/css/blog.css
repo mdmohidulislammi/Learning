@@ -9,7 +9,15 @@
   font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
   font-size: 2.25rem;
 }
+/* .transition-slogan {
+  display: inline-block;
+  transition: transform 1s ease, opacity 1s ease;
+}
 
+.transition-slogan:hover {
+  transform: translateY(-4px);
+  opacity: 0.9;
+} */
 .blog-header-logo:hover {
   text-decoration: none;
 }
