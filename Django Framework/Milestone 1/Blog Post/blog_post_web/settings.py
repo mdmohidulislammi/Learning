@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blogs',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -36,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'blog_post_web.urls'
@@ -97,7 +100,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -117,3 +124,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+#Media files configuration
+MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR/'media'

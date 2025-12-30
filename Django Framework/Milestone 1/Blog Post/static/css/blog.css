@@ -1,111 +1,30 @@
-/* stylelint-disable selector-list-comma-newline-after */
+.blog_slogan {
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #000;
 
-.blog-header {
-  line-height: 1;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.blog-header-logo {
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
-  font-size: 2.25rem;
-}
-/* .transition-slogan {
-  display: inline-block;
-  transition: transform 1s ease, opacity 1s ease;
+  max-width: 0;
+  animation: typing 11s steps(55, end) infinite,
+             blink 5s step-end infinite;
 }
 
-.transition-slogan:hover {
-  transform: translateY(-4px);
-  opacity: 0.9;
-} */
-.blog-header-logo:hover {
-  text-decoration: none;
-}
+@keyframes typing {
+  0% {
+    max-width: 0;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
-}
+  70% {
+    max-width: 55ch; /* typing done */
+  }
 
-.display-4 {
-  font-size: 2.5rem;
-}
-@media (min-width: 768px) {
-  .display-4 {
-    font-size: 3rem;
+  100% {
+    max-width: 0;   /* reset for next loop */
   }
 }
 
-.nav-scroller {
-  position: relative;
-  z-index: 2;
-  height: 2.75rem;
-  overflow-y: hidden;
-}
-
-.nav-scroller .nav {
-  display: flex;
-  flex-wrap: nowrap;
-  padding-bottom: 1rem;
-  margin-top: -1px;
-  overflow-x: auto;
-  text-align: center;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-
-.nav-scroller .nav-link {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: .875rem;
-}
-
-.card-img-right {
-  height: 100%;
-  border-radius: 0 3px 3px 0;
-}
-
-.flex-auto {
-  flex: 0 0 auto;
-}
-
-.h-250 { height: 250px; }
-@media (min-width: 768px) {
-  .h-md-250 { height: 250px; }
-}
-
-/* Pagination */
-.blog-pagination {
-  margin-bottom: 4rem;
-}
-.blog-pagination > .btn {
-  border-radius: 2rem;
-}
-
-/*
- * Blog posts
- */
-.blog-post {
-  margin-bottom: 4rem;
-}
-.blog-post-title {
-  margin-bottom: .25rem;
-  font-size: 2.5rem;
-}
-.blog-post-meta {
-  margin-bottom: 1.25rem;
-  color: #727272;
-}
-
-/*
- * Footer
- */
-.blog-footer {
-  padding: 2.5rem 0;
-  color: #727272;
-  text-align: center;
-  background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
-}
-.blog-footer p:last-child {
-  margin-bottom: 0;
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
 }
