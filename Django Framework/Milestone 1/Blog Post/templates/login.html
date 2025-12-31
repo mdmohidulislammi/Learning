@@ -44,14 +44,16 @@
         </a>
 
         <!-- Register Button -->
-        <button
-            type="button"
-            class="text-white bg-green-800 p-3 sm:p-4
-                   w-full sm:w-1/2
-                   sm:col-span-4 sm:col-start-3
-                   hover:bg-green-900 font-bold rounded-xl transition">
-            Or, Register
-        </button>
+        <a
+  href="{% url 'signUp' %}"
+  class="block text-center text-white bg-green-800 p-3 sm:p-4
+         w-full sm:w-1/2
+         sm:col-span-4 sm:col-start-3
+         hover:bg-green-900 font-bold rounded-xl
+         transition duration-300">
+  Or, Register
+</a>
+
 
     </form>
 </div>

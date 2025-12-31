@@ -37,3 +37,22 @@ def posts(request):
         'blogs':blogs
     }
     return render(request,'posts.html',context)
+
+# login funtion
+def login_page(request):
+    current_year = date.today().year
+    categories = Category.objects.all()
+    context={
+        'year':current_year,
+        'categories':categories
+    }
+    return render(request, 'login.html', context)
+# Register funcitonality
+def signUp_page(request):
+    current_year = date.today().year
+    categories = Category.objects.all()
+    context={
+        'year':current_year,
+        'categories':categories
+    }
+    return render(request, 'register.html', context)

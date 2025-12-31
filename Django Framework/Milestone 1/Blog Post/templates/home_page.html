@@ -77,16 +77,20 @@
       <!-- After featured posts -->
 <div class="flex justify-center mt-10">
   <a
-    href="{% url 'posts' %}"
-    class="px-7 py-3 
-           rounded-full 
-           bg-yellow-400 text-black 
-           font-semibold tracking-wide
-           hover:bg-yellow-300 
-           transition"
-  >
-    View All Posts →
-  </a>
+  href="{% url 'posts' %}"
+  class="inline-flex items-center gap-2
+         px-4 py-2
+         rounded-md
+         border border-gray-600
+         text-sm font-medium
+         text-gray-200
+         hover:bg-gray-800 hover:border-gray-400
+         transition"
+>
+  View all posts
+  <span class="text-gray-400">→</span>
+</a>
+
 </div>
 
 <!--  Back to top -->

@@ -1,6 +1,27 @@
 {% extends "base.html" %}
 
 {% block all_posts %}    
+
+{% comment %} warning or error messages {% endcomment %}
+
+{% if messages %}
+  <div class="max-w-7xl mx-auto px-4 mt-4 space-y-3">
+    {% for message in messages %}
+      <div
+        class="px-4 py-3 rounded-lg text-sm font-medium
+        {% if message.tags == 'error' %}
+          bg-red-500/20 text-red-400 border border-red-500/30
+        {% elif message.tags == 'warning' %}
+          bg-yellow-500/20 text-yellow-400 border border-yellow-500/30
+        {% else %}
+          bg-blue-500/20 text-blue-400 border border-blue-500/30
+        {% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 <div class="max-w-7xl mx-auto px-4 py-6 space-y-8">
 
     {% for blog in blogs %}
