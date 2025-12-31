@@ -1,16 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from blogs.models import Category,Blogs
 from datetime import date
-
-# def base(request):
-    # current_year=date.today().year
-    # categories=Category.objects.all()
-    # context={
-    #     'year':current_year,
-    #     'categories':categories,
-    # }
-    # return render(request,'base.html',context)
+from blog_post_web.forms import Registration_Form
+from django.contrib import messages
 
 
 def home(request):
@@ -49,10 +42,12 @@ def login_page(request):
     return render(request, 'login.html', context)
 # Register funcitonality
 def signUp_page(request):
-    current_year = date.today().year
-    categories = Category.objects.all()
-    context={
-        'year':current_year,
-        'categories':categories
-    }
-    return render(request, 'register.html', context)
+    if request.method == "POST":
+        form = Registration_Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    else:
+        form = Registration_Form()
+
+    return render(request, "register.html", {"form": form})

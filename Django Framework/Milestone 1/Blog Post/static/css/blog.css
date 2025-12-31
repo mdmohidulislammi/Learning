@@ -1,30 +1,49 @@
 .blog_slogan {
-  font-family: monospace;
+  display: inline-block;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid #000;
 
-  max-width: 0;
-  animation: typing 11s steps(55, end) infinite,
-             blink 5s step-end infinite;
+
+  border-right: 2px solid currentColor;
+
+
+  animation:
+    typing 11 steps(55, end) forwards,
+    blink 2s step-end infinite;
 }
 
 @keyframes typing {
-  0% {
-    max-width: 0;
+  from {
+    width: 0;
   }
-
-  70% {
-    max-width: 55ch; /* typing done */
-  }
-
-  100% {
-    max-width: 0;   /* reset for next loop */
+  to {
+    width: 100%;
   }
 }
 
 @keyframes blink {
   50% {
     border-color: transparent;
+  }
+}
+
+/* 📱 Mobile Fix */
+@media (max-width: 640px) {
+  .blog_slogan {
+    white-space: normal; 
+    border-right: none;   
+    animation: fadeIn 2s ease forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
