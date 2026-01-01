@@ -4,6 +4,7 @@ from blogs.models import Category,Blogs
 from datetime import date
 from blog_post_web.forms import Registration_Form
 from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def home(request):
@@ -35,11 +36,15 @@ def posts(request):
 def login_page(request):
     current_year = date.today().year
     categories = Category.objects.all()
+    form=AuthenticationForm()
     context={
         'year':current_year,
-        'categories':categories
+        'categories':categories,
+        'form':form
     }
     return render(request, 'login.html', context)
+
+
 # Register funcitonality
 def signUp(request):
     if request.method == "POST":

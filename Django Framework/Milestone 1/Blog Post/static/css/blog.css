@@ -3,29 +3,34 @@
   overflow: hidden;
   white-space: nowrap;
 
-  width: 0px;
-  max-width: max-content;
-
+  width: 0;
   border-right: 2px solid currentColor;
 
   animation:
-    typing 4s steps(1, end) forwards,
-    blink 0.8s step-end infinite;
+    typing 5.5s steps(55, end) forwards,
+    blink .8s step-end infinite;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
 }
 
 @keyframes typing {
-  from { width: 0px; }
-  to   { width: max-content; }
+  from { width: 0; }
+  to   { width: 55ch; }
 }
 
 @keyframes blink {
   50% { border-color: transparent; }
 }
-@media (max-width: 640px) {
-  .blog_slogan {
-    width: auto;
-    white-space: normal;
-    border-right: none;
-    animation: fadeIn 1.5s ease forwards;
-  }
+
+/* Add a pause after typing */
+@keyframes typingLoop {
+  0%   { width: 0; }
+  80%  { width: 55ch; }   
+  100% { width: 55ch; }   
+}
+
+.blog_slogan {
+  animation:
+    typingLoop 11s steps(55, end) infinite,
+    blink .8s step-end infinite;
 }
