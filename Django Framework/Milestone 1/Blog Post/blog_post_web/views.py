@@ -41,7 +41,7 @@ def login_page(request):
     }
     return render(request, 'login.html', context)
 # Register funcitonality
-def signUp_page(request):
+def signUp(request):
     if request.method == "POST":
         form = Registration_Form(request.POST)
         if form.is_valid():

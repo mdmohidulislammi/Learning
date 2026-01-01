@@ -1,49 +1,31 @@
 .blog_slogan {
   display: inline-block;
-  max-width: 100%;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
 
+  width: 0px;
+  max-width: max-content;
 
   border-right: 2px solid currentColor;
 
-
   animation:
-    typing 11 steps(55, end) forwards,
-    blink 2s step-end infinite;
+    typing 4s steps(1, end) forwards,
+    blink 0.8s step-end infinite;
 }
 
 @keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+  from { width: 0px; }
+  to   { width: max-content; }
 }
 
 @keyframes blink {
-  50% {
-    border-color: transparent;
-  }
+  50% { border-color: transparent; }
 }
-
-/* 📱 Mobile Fix */
 @media (max-width: 640px) {
   .blog_slogan {
-    white-space: normal; 
-    border-right: none;   
-    animation: fadeIn 2s ease forwards;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    width: auto;
+    white-space: normal;
+    border-right: none;
+    animation: fadeIn 1.5s ease forwards;
   }
 }
