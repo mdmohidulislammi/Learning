@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogs',
     'debug_toolbar',
+    'users',
 ]
 
 MIDDLEWARE = [
