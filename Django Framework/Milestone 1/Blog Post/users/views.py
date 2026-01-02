@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.defaultfilters import slugify
-from blogs.models import Category, Blogs
+from blogs.models import Category, Blogs,Comment, React
 from datetime import date
 from blogs.forms import Add_post_form
 from django.contrib import messages
@@ -103,13 +103,13 @@ def update_post(request, id):
      if request.method == "POST": 
         form = Add_post_form(request.POST, request.FILES, instance=post) 
         if form.is_valid(): 
-             updated_post = form.save(commit=False) 
-             updated_post.author = request.user # keep author consistent 
-             title = form.cleaned_data['title'] 
-             updated_post.slug = slugify(title) # regenerate slug if title changes 
-             updated_post.save() 
-             messages.success(request, "Post updated successfully!") 
-             return redirect("posts") 
+            updated_post = form.save(commit=False) 
+            updated_post.author = request.user # keep author consistent 
+            title = form.cleaned_data['title'] 
+            updated_post.slug = slugify(title) # regenerate slug if title changes 
+            updated_post.save() 
+            messages.success(request, "Post updated successfully!") 
+            return redirect("posts") 
         else: 
          messages.error(request, "Update failed. Please check the form and try again.") 
          return redirect("update_post", id=request.post.id) 
@@ -159,5 +159,4 @@ def delete_user(request, id):
         return redirect("user_profile", request.user.id)
 
 
-def comment(request):
-    pass
+

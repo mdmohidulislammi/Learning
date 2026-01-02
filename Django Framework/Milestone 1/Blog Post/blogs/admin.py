@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blogs.models import Category, Blogs
+from blogs.models import Category, Blogs, Comment, React
 from django.contrib.auth.models import User
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,3 +12,5 @@ class BlogAdmin(admin.ModelAdmin):
     list_editable=('status','is_featured')
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Blogs,BlogAdmin)
+admin.site.register(Comment)
+admin.site.register(React)

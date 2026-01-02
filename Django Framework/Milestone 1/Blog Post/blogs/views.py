@@ -1,9 +1,13 @@
-from django.shortcuts import render,get_object_or_404
-from datetime import date 
-from blogs.models import Blogs, Category
-from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.defaultfilters import slugify
+from blogs.models import Category, Blogs,Comment, React
+from datetime import date
+from blogs.forms import Add_post_form, CommentForm, ReactForm
 from django.contrib import messages
-
+from django.db.models import Q
+from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # show posts by category
 def posts_by_category(request,category_id):
@@ -23,14 +27,49 @@ def post_detail(request,id):
     categories = Category.objects.all()
     
     blog = get_object_or_404(Blogs.objects.select_related('author', 'category'),id=id, status=1)
-    
+    # For comment, reacts
+    blog_reacts_comment = Blogs.objects.select_related('author', 'category').prefetch_related('comment_set', 'react_set').get(id=id, status=1) 
+    comments=blog_reacts_comment.comment_set.all()
+    reacts=blog_reacts_comment.react_set.all()
+    comment_form=CommentForm()
     context = {
         'year': current_year,
         'categories': categories,
-        'post': blog,  # pass as 'post' to match template variable
+        'post': blog,  # pass as 'post' 
+        'comments':comments,
+        'reacts':reacts,
+        'comment_form':CommentForm
     }
     return render(request, 'single_post.html',context)
 
+
+
+@login_required(login_url="login_page")
+def add_comment(request, id):
+    blog = get_object_or_404(Blogs, id=id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.blog = blog
+            comment.save()
+            messages.success(request, "Comment added successfully!")
+    return redirect("post_detail", id=id)
+
+
+@login_required(login_url="login_page")
+def react_to_post(request, id):
+    blog = get_object_or_404(Blogs, id=id)
+    react, created = React.objects.get_or_create(user=request.user, blog=blog)
+
+    if not created:
+        react.delete()  # toggle off
+    else:
+        react.reacts = True
+        react.save()
+
+    return redirect("post_detail", id=id)
 
 
 
