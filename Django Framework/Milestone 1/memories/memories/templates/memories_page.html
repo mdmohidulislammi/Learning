@@ -1,0 +1,48 @@
+{% extends "home_base.html" %}
+{% load static %}
+
+{% block home %}
+
+<!-- Memories Page -->
+<section class="pt-28 pb-20 bg-violet-200 min-h-screen">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+    <!-- Page Header -->
+    <div class="mb-10 text-center sm:text-left">
+      <h1 class="text-3xl sm:text-4xl font-bold text-purple-900">Your Memories</h1>
+      <p class="text-purple-800 mt-2">All your saved moments, visible only to you.</p>
+    </div>
+
+    <!-- Memories List -->
+    <div class="space-y-6">
+
+      {% for memory in memories %}
+      <!-- Single Memory Card -->
+      <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-6 hover:shadow-xl transition">
+        
+        <!-- Date & Time -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 text-sm text-gray-500">
+          <span>{{ memory.created_at|date:"F d, Y" }}</span>
+          <span>{{ memory.created_at|time:"h:i A" }}</span>
+        </div>
+
+        <!-- Heading -->
+        <h2 class="text-xl font-semibold text-purple-800 mb-2 break-words">
+          {{ memory.title }}
+        </h2>
+      </div>
+      {% empty %}
+
+      <!-- Empty State -->
+      <div class="text-center bg-white rounded-2xl shadow-md p-10">
+        <h2 class="text-2xl font-semibold text-purple-800 mb-2">No Memories Yet</h2>
+        <p class="text-gray-600">Start writing your first memory and it will appear here.</p>
+      </div>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+{% endblock home %}
