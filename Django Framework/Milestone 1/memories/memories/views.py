@@ -55,27 +55,3 @@ def update_memory(request):
     pass
 def delete_memory(request):
     pass
-def login(request):
-    current_year = date.today().year
-    form=LoginForm()
-    if request.method=='POST':
-        form=LoginForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        else:
-            messages.error(request,"Form is not valid")
-            return redirect('home')
-    
-    context={
-        'year':current_year,
-        'form':form
-    }
-    return render(request, 'login.html', context)
-def logOut(request):
-    logout(request)
-    return redirect('home')
-def register(request):
-    pass
-def delete_user(request):
-    pass
