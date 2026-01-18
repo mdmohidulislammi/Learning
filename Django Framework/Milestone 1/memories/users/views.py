@@ -10,6 +10,12 @@ from memories.forms import LoginForm, RegisterForm, MemoryForm
 from memories.models import Memory
 
 # Create your views here.
+def dashboard(request):
+    current_year=date.today().year
+    context={
+        'year':current_year
+    }
+    return render(request, 'dashboard.html', context)
 def login(request):
     current_year = date.today().year
     form=LoginForm()
@@ -31,6 +37,8 @@ def logOut(request):
     logout(request)
     return redirect('home')
 def register(request):
+    pass
+def update(request):
     pass
 def delete_user(request):
     pass

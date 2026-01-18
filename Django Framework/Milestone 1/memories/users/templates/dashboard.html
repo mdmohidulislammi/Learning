@@ -16,6 +16,16 @@
     <!-- Dashboard Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
+      <!-- Stats (No Posts Shown) -->
+      <div class="bg-white rounded-3xl shadow-xl p-6">
+        <h2 class="text-xl font-semibold text-purple-800 mb-2">Account Info</h2>
+        <ul class="text-gray-700 space-y-2">
+          <li><span class="font-medium">Username:</span> {{ request.user.username }}</li>
+          <li><span class="font-medium">Email:</span> {{ request.user.email }}</li>
+          <li><span class="font-medium">Joined:</span> {{ request.user.date_joined|date:"F d, Y" }}</li>
+        </ul>
+      </div>
+
       <!-- Profile Card -->
       <div class="bg-white rounded-3xl shadow-xl p-6">
         <h2 class="text-xl font-semibold text-purple-800 mb-4">Profile</h2>
@@ -35,32 +45,24 @@
       </div>
 
       <!-- Account Settings -->
-      <div class="bg-white rounded-3xl shadow-xl p-6">
+      {% comment %} <div class="bg-white rounded-3xl shadow-xl p-6">
         <h2 class="text-xl font-semibold text-purple-800 mb-4">Settings</h2>
         <p class="text-gray-600 mb-4">Control preferences and notification settings.</p>
         <a href="#" class="inline-block px-5 py-2 rounded-xl bg-purple-600 text-white font-medium hover:bg-purple-700 transition">
           Account Settings
         </a>
-      </div>
+      </div> {% endcomment %}
 
-      <!-- Stats (No Posts Shown) -->
-      <div class="bg-white rounded-3xl shadow-xl p-6">
-        <h2 class="text-xl font-semibold text-purple-800 mb-2">Account Info</h2>
-        <ul class="text-gray-700 space-y-2">
-          <li><span class="font-medium">Username:</span> {{ request.user.username }}</li>
-          <li><span class="font-medium">Email:</span> {{ request.user.email }}</li>
-          <li><span class="font-medium">Joined:</span> {{ request.user.date_joined|date:"F d, Y" }}</li>
-        </ul>
-      </div>
+      
 
       <!-- Danger Zone -->
-      <div class="bg-white rounded-3xl shadow-xl p-6 border border-red-200">
+      {% comment %} <div class="bg-white rounded-3xl shadow-xl p-6 border border-red-200">
         <h2 class="text-xl font-semibold text-red-600 mb-4">Danger Zone</h2>
         <p class="text-gray-600 mb-4">Delete or deactivate your account permanently.</p>
         <button class="px-5 py-2 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 transition">
           Delete Account
         </button>
-      </div>
+      </div> {% endcomment %}
 
     </div>
   </div>
