@@ -80,10 +80,10 @@ document.getElementById('about').addEventListener('click', function (e) {
 
   togglePopup(`
     <h2 class="text-xl font-semibold mb-3 text-black">
-      Recollection — Your Memories, Securely Preserved
+      PASTEL MEMORIES — Your Memories, Securely Preserved
     </h2>
     <p class="text-sm text-black leading-relaxed ">
-      Recollection is a personal memory-keeping platform designed to help you capture,
+      "PASTEL MEMORIES" is a personal memory-keeping platform designed to help you capture,
       store, and relive your most meaningful moments.
 
       <br><br>
