@@ -82,7 +82,7 @@ def update(request, id):
             if request.user.is_superuser:
                 return redirect('manager' )
             else:
-                return redirect('dashboard', id=user.id)  # Redirect to profile page after update
+                return redirect('dashboard', id=user.id) 
     else:
         form = Update_User_Form(instance=user)
 
