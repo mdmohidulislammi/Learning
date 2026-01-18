@@ -16,6 +16,12 @@ def dashboard(request):
         'year':current_year
     }
     return render(request, 'dashboard.html', context)
+def manager_dashboard(request):
+    current_year=date.today().year
+    context={
+        'year':current_year
+    }
+    return render(request, 'manager_dashboard.html', context)
 def login(request):
     current_year = date.today().year
     form=LoginForm()

@@ -1,57 +1,129 @@
+const nav = document.querySelector('nav');
 
-  const nav = document.querySelector('nav');
+// Remove popup with animation
+function clearPopups() {
+  const popup = document.querySelector('.nav-popup');
+  if (!popup) return;
 
-  // Function to clear existing popups
-  function clearPopups() {
-    const existing = document.querySelector('.nav-popup');
-    if (existing) existing.remove();
-  }
+  popup.classList.remove('opacity-100', 'scale-100');
+  popup.classList.add('opacity-0', 'scale-95');
 
-  // Function to create popup content
-  function createPopup(content) {
+  setTimeout(() => popup.remove(), 200);
+}
+
+// Create popup with animation
+function createPopup(content) {
+  clearPopups();
+
+  const popup = document.createElement('div');
+  popup.className = `
+    nav-popup
+    fixed top-24 left-1/2 -translate-x-1/2
+    w-[90%] sm:w-[85%] md:w-1/2
+    p-6
+    z-50
+    bg-white/20 backdrop-blur-md
+    border border-white/30
+    rounded-2xl shadow-2xl
+    text-center
+
+    opacity-0 scale-95
+    transition-all duration-200 ease-out
+  `;
+
+  popup.innerHTML = content;
+  document.body.appendChild(popup);
+
+  // Trigger animation
+  requestAnimationFrame(() => {
+    popup.classList.remove('opacity-0', 'scale-95');
+    popup.classList.add('opacity-100', 'scale-100');
+  });
+
+  // Click outside to close
+  setTimeout(() => {
+    document.addEventListener('click', outsideClickHandler);
+  }, 0);
+}
+
+// Toggle popup
+function togglePopup(content) {
+  const existing = document.querySelector('.nav-popup');
+  if (existing) {
     clearPopups();
-    const popup = document.createElement('div');
-    popup.className = ' nav-popup m-auto md:w-1/2 sm:w-full p-6 z-50 bg-purple-300 shadow-xl items-center text-center  insert-0  rounded-xl';
-    popup.innerHTML = content;
-    nav.appendChild(popup);
+  } else {
+    createPopup(content);
   }
+}
 
-  // Toggle logic
-  function togglePopup(id, content) {
-    const existing = document.querySelector('.nav-popup');
-    if (existing) {
-      // If popup already exists, remove it (vanish)
-      clearPopups();
-    } else {
-      // Otherwise show new popup
-      createPopup(content);
-    }
+// Handle outside click
+function outsideClickHandler(e) {
+  const popup = document.querySelector('.nav-popup');
+  if (!popup) return;
+
+  if (!popup.contains(e.target)) {
+    clearPopups();
+    document.removeEventListener('click', outsideClickHandler);
   }
+}
 
-  // About click
-  document.getElementById('about').addEventListener('click', function(e) {
-    e.preventDefault();
-    togglePopup('about', `
-      <h2 class="text-lg font-semibold mb-2">Recollection — Your Memories, Securely Preserved</h2>
-      <p class="text-sm text-gray-700">
+// ESC key close (bonus UX)
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    clearPopups();
+  }
+});
 
-Recollection is a personal memory-keeping platform designed to help you capture, store, and relive your most meaningful moments. From simple thoughts and daily experiences to important life events, Recollection gives you a private and secure space where your memories truly belong to you.
+// ABOUT
+document.getElementById('about').addEventListener('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
 
-Every memory you save is protected behind your personal account. Only you can view, edit, or revisit your recollections after logging in. With a simple registration process and an intuitive interface, Recollection ensures that your memories remain organized, accessible, and safe—anytime you need them.
+  togglePopup(`
+    <h2 class="text-xl font-semibold mb-3 text-white">
+      Recollection — Your Memories, Securely Preserved
+    </h2>
+    <p class="text-sm text-gray-200 leading-relaxed">
+      Recollection is a personal memory-keeping platform designed to help you capture,
+      store, and relive your most meaningful moments.
 
-Whether you want to reflect on the past, track your personal growth, or preserve moments you never want to forget, Recollection is your digital diary, built with privacy, simplicity, and trust at its core.</p>
-    `);
-  });
+      <br><br>
 
-  // Contact click
-  document.getElementById('contact').addEventListener('click', function(e) {
-    e.preventDefault();
-    togglePopup('contact', `
-      <h2 class="text-lg text-center font-semibold mb-2">Contact Links</h2>
-      <ul class="list-none pl-5 text-sm text-gray-700 hover:text-white">
-        <li  class="text-black no-underline  hover:text-gray-600 font-semibold md:text-xl text-md">Email : islamohidul856mi647360@gmail.com</li>
-        <li><a href="https://www.linkedin.com/in/md-mi/" class="text-black font-semibold no-underline md:text-xl text-md hover:text-white">LinkedIn</a></li>
-        <li><a href="https://github.com/mdmohidulislammi/" class="text-black font-semibold no-underline text-md md:text-xl hover:text-white">GitHub</a></li>
-      </ul>
-    `);
-  });
+      Every memory is protected behind your account — private, secure, and accessible
+      anytime.
+
+      <br><br>
+
+      Your digital diary, built with trust and simplicity.
+    </p>
+  `);
+});
+
+// CONTACT
+document.getElementById('contact').addEventListener('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  togglePopup(`
+    <h2 class="text-xl font-semibold mb-4 text-white">Contact Links</h2>
+    <ul class="space-y-3 text-gray-200">
+      <li class="font-semibold md:text-lg">
+        📧 Email: islamohidul856mi647360@gmail.com
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/md-mi/"
+           target="_blank"
+           class="font-semibold md:text-lg underline hover:text-white">
+           LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/mdmohidulislammi/"
+           target="_blank"
+           class="font-semibold md:text-lg underline hover:text-white">
+           GitHub
+        </a>
+      </li>
+    </ul>
+  `);
+});
