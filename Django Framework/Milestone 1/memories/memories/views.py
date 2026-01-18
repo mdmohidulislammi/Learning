@@ -20,19 +20,19 @@ def home(request):
 def create_memory(request):
     current_year=date.today().year
     if request.method == "POST":
-        form = MemoryForm(request.POST, request.FILES)
+        form = MemoryForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            title=form.cleaned_data['title']
-            post.slug=slugify(title)
-            post.save()
-            return redirect("read_memory")
+          post = form.save(commit=False)
+          post.author = request.user
+        #   post.save()
+          title=form.cleaned_data['title']
+          post.slug=slugify(title)
+          post.save()
+          return redirect('read-memory')
+
         else:
-            id=request.user.id
             messages.error(request, "Post is not valid. Please try again...")
-            return redirect('home')
+            return redirect('read-memory')
     else:
         form = MemoryForm()
 
@@ -50,8 +50,45 @@ def read_memory(request):
         'memories':memories
     }
     return render(request,'memories_page.html',context)
+def individual_memory(request, id):
+    current_year=date.today().year
+    post = get_object_or_404(Memory.objects.select_related('author'), id=id)
+    context={
+        'year':current_year, 
+        'memory':post,
+    }
+    return render(request, 'memory.html', context)
 
-def update_memory(request):
-    pass
-def delete_memory(request):
-    pass
+def update_memory(request, id):
+    current_year=date.today().year
+    memory=get_object_or_404(Memory, id=id)
+    # memory = get_object_or_404(Memory.objects.select_related('author'), id=id)
+    
+    if request.method=='POST':
+        form=MemoryForm(request.POST, instance=memory)
+        if form.is_valid():
+            updated_form=form.save(commit=False)
+            updated_form.author=request.user
+            title=form.cleaned_data['title']
+            updated_form.slug=slugify(title)
+            updated_form.save()
+            messages.success(request, "Post updated Successfully!")
+            return redirect('read-memory')
+        else:
+            messages.error(request, 'Updated Failed. Please try again...')
+            return redirect('read-memory')
+    else:
+        form=MemoryForm(instance=memory)
+    context={
+        "year":current_year, 
+        "form":form,
+        "memory":memory
+    }
+    return render(request, 'memory_form.html', context)
+
+def delete_memory(request, id):
+    current_year=date.today().year
+    post = get_object_or_404(Memory.objects.select_related('author'), id=id)
+    post.delete()
+    messages.success(request, 'Post deleted successfully .')
+    return redirect('read-memory')

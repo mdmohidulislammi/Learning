@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 class Memory(models.Model):
     title=models.CharField(max_length=100)
-    slug=models.SlugField(unique=True, blank=True)
+    slug=models.SlugField(unique=True, blank=False)
     author=models.ForeignKey(User, on_delete=models.CASCADE)
-    body=models.TextField(max_length=1000000)
+    body=models.TextField(max_length=100000)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     class Meta:

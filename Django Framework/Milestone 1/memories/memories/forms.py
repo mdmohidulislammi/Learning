@@ -62,14 +62,16 @@ class LoginForm(AuthenticationForm):
     )
 class MemoryForm(forms.ModelForm):
     title = forms.CharField(
+        label="Memory Title",
         widget=forms.TextInput(attrs={
-            "class": "w-full px-4 py-3 rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white",
+            "class": "w-full px-4 py-3 rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-black",
             "placeholder": "Memory title"
         })
     )
-    content = forms.CharField(
+    body = forms.CharField(
+        label="Your Memory",
         widget=forms.Textarea(attrs={
-            "class": "w-full px-4 py-3 rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none text-white",
+            "class": "w-full px-4 py-3 rounded-xl border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none text-black",
             "placeholder": "Write your memory here...",
             "rows": 8
         })
@@ -77,4 +79,4 @@ class MemoryForm(forms.ModelForm):
 
     class Meta:
         model = Memory
-        fields = ("title", "content")
+        fields = ("title", "body")

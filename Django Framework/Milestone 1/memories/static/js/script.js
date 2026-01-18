@@ -26,7 +26,6 @@ function createPopup(content) {
     border border-white/30
     rounded-2xl shadow-2xl
     text-center
-
     opacity-0 scale-95
     transition-all duration-200 ease-out
   `;
@@ -80,10 +79,10 @@ document.getElementById('about').addEventListener('click', function (e) {
   e.stopPropagation();
 
   togglePopup(`
-    <h2 class="text-xl font-semibold mb-3 text-white">
+    <h2 class="text-xl font-semibold mb-3 text-black">
       Recollection — Your Memories, Securely Preserved
     </h2>
-    <p class="text-sm text-gray-200 leading-relaxed">
+    <p class="text-sm text-black leading-relaxed ">
       Recollection is a personal memory-keeping platform designed to help you capture,
       store, and relive your most meaningful moments.
 
@@ -105,22 +104,22 @@ document.getElementById('contact').addEventListener('click', function (e) {
   e.stopPropagation();
 
   togglePopup(`
-    <h2 class="text-xl font-semibold mb-4 text-white">Contact Links</h2>
+    <h2 class="text-xl font-semibold mb-4 text-black">Contact Links</h2>
     <ul class="space-y-3 text-gray-200">
-      <li class="font-semibold md:text-lg">
-        📧 Email: islamohidul856mi647360@gmail.com
+      <li class="font-semibold md:text-lg text-black">
+        📧 Email : islamohidul856mi647360@gmail.com
       </li>
       <li>
         <a href="https://www.linkedin.com/in/md-mi/"
            target="_blank"
-           class="font-semibold md:text-lg underline hover:text-white">
+           class="font-semibold md:text-lg underline hover:text-white text-black">
            LinkedIn
         </a>
       </li>
       <li>
         <a href="https://github.com/mdmohidulislammi/"
            target="_blank"
-           class="font-semibold md:text-lg underline hover:text-white">
+           class="font-semibold md:text-lg underline hover:text-white text-black>
            GitHub
         </a>
       </li>
