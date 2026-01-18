@@ -16,7 +16,7 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-
+@login_required(login_url='signIn')
 def create_memory(request):
     current_year=date.today().year
     if request.method == "POST":
@@ -42,6 +42,7 @@ def create_memory(request):
     }
 
     return render(request, 'memory_form.html', context)
+@login_required(login_url='signIn')
 def read_memory(request):
     current_year=date.today().year
     memories=Memory.objects.select_related('author',).filter(author_id=request.user.id)
@@ -50,6 +51,7 @@ def read_memory(request):
         'memories':memories
     }
     return render(request,'memories_page.html',context)
+@login_required(login_url='signIn')
 def individual_memory(request, id):
     current_year=date.today().year
     post = get_object_or_404(Memory.objects.select_related('author'), id=id)
@@ -59,6 +61,7 @@ def individual_memory(request, id):
     }
     return render(request, 'memory.html', context)
 
+@login_required(login_url='signIn')
 def update_memory(request, id):
     current_year=date.today().year
     memory=get_object_or_404(Memory, id=id)
@@ -86,6 +89,7 @@ def update_memory(request, id):
     }
     return render(request, 'memory_form.html', context)
 
+@login_required(login_url='signIn')
 def delete_memory(request, id):
     current_year=date.today().year
     post = get_object_or_404(Memory.objects.select_related('author'), id=id)

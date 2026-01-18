@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,25 +27,33 @@
   <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
       <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
-        <img class="w-8 h-8 rounded-full" src="{% static 'images/8.jpeg' %}" alt="user photo">
+        
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500 text-white font-bold text-xl"> {{ user.first_name|default:user.username|slice:":1"|upper }} </div>
+         {% comment %} <img class="w-8 h-8 rounded-full" src="{% static 'images/8.jpeg' %}" alt="user photo"> {% endcomment %}
+
       </button>
       <!-- Dropdown menu -->
 
-      <!-- User -->
-      
+      <!-- User -->     
 
-      <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44" id="user-dropdown">
+      <div class="z-50 hidden bg-gray-400-primary-medium border border-default-medium rounded-base shadow-lg w-44" id="user-dropdown">
         <div class="px-4 py-3 text-sm border-b border-default">
-          <span class="block text-heading font-medium">Md. Mohidul Islam</span>
-          <span class="block text-body truncate">islamohidul856mi647360@gmail.com</span>
+          <span class="block text-heading font-medium"> {{user.first_name}} {{user.last_name}} </span>
+          <span class="block text-body truncate"> {{user.email}} </span>
         </div>
         <!-- Necessary btn -->
         <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
+          {% if user.is_superuser %}
           <li>
-            <a href="#" class="inline-flex items-center hover:text-white w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer">Dashboard</a>
-          </li>                   
+            <a href="{% url 'manager'  %}" class="inline-flex items-center hover:text-white w-full p-2 hover:bg-gray-400-tertiary-medium hover:text-heading rounded cursor-pointer">Dashboard</a>
+          </li> 
+          {% elif user.is_authenticated %}
           <li>
-            <a href="{% url 'logOut' %}" class="inline-flex items-center w-full p-2 hover:text-white hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer">Sign out</a>
+            <a href="{% url 'dashboard' user.id %}" class="inline-flex items-center hover:text-white w-full p-2 hover:bg-gray-400-tertiary-medium hover:text-heading rounded cursor-pointer">Dashboard</a>
+          </li> 
+          {% endif %}                  
+          <li>
+            <a href="{% url 'logOut' %}" class="inline-flex items-center w-full p-2 hover:text-white hover:bg-gray-400-tertiary-medium hover:text-heading rounded cursor-pointer">Sign out</a>
           </li>
         </ul>
       </div>
@@ -62,7 +71,7 @@
       </button>
 
         <div class="flex flex-wrap gap-4">
-        <a  class="px-2 py-2 rounded-xl bg-purple-700 text-white font-semibold shadow-sm hover:bg-purple-900 transition cursor-pointer">
+        <a href="{% url 'signUp' %}" class="px-2 py-2 rounded-xl bg-purple-700 text-white font-semibold shadow-sm hover:bg-purple-900 transition cursor-pointer">
           SIGN UP
         </a>
         <a href="{% url 'signIn' %}" class="cursor-pointer px-2 py-2 rounded-xl border-2 border-purple-700 text-purple-800 font-semibold hover:bg-purple-700 hover:text-white transition">

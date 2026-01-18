@@ -6,33 +6,44 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from memories.forms import LoginForm, RegisterForm, MemoryForm
+from memories.forms import LoginForm, RegisterForm,Update_User_Form
 from memories.models import Memory
 
 # Create your views here.
-def dashboard(request):
-    current_year=date.today().year
+@login_required(login_url='signIn')
+def dashboard(request, id):
+    current_year=date.today().year 
     context={
-        'year':current_year
+        'year':current_year,
     }
     return render(request, 'dashboard.html', context)
+# @login_required(login_url='signIn')
 def manager_dashboard(request):
     current_year=date.today().year
+    id=request.user.id 
+    if not request.user.is_authenticated:
+        return redirect('signIn')    
+    users=User.objects.all()
     context={
-        'year':current_year
+        'year':current_year,
+        'users':users,
     }
     return render(request, 'manager_dashboard.html', context)
-def login(request):
+def signIn(request):
     current_year = date.today().year
     form=LoginForm()
     if request.method=='POST':
-        form=LoginForm(request.POST)
+        form=LoginForm(request,request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
-        else:
-            messages.error(request,"Form is not valid")
-            return redirect('home')
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+            user=authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+
+    else:
+        form=LoginForm()
     
     context={
         'year':current_year,
@@ -42,9 +53,60 @@ def login(request):
 def logOut(request):
     logout(request)
     return redirect('home')
-def register(request):
-    pass
-def update(request):
-    pass
-def delete_user(request):
-    pass
+
+def signUp(request):
+    current_year = date.today().year
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('home')
+    else:
+        form = RegisterForm()
+
+    context = {
+        'form': form,
+        'year': current_year
+    }
+    return render(request, 'register.html', context)
+
+
+@login_required(login_url='signIn')
+def update(request, id):
+    current_year = date.today().year
+    user=get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        form = Update_User_Form(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            if request.user.is_superuser:
+                return redirect('manager' )
+            else:
+                return redirect('dashboard', id=user.id)  # Redirect to profile page after update
+    else:
+        form = Update_User_Form(instance=user)
+
+    context = {
+        'form': form,
+        'year': current_year
+    }
+    return render(request, 'register.html', context)
+
+
+@login_required
+def delete_user(request,id):
+    user = get_object_or_404(User, id=id)
+
+    if request.method == 'POST':
+        user.delete()
+        if user.is_superuser:
+             return redirect('dashboard')
+        else:
+            return redirect('home')  
+    else:
+        user.delete()
+        if request.user.is_superuser:
+             return redirect('manager')
+        else:
+            return redirect('home') 
+    

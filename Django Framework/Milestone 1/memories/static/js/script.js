@@ -119,10 +119,20 @@ document.getElementById('contact').addEventListener('click', function (e) {
       <li>
         <a href="https://github.com/mdmohidulislammi/"
            target="_blank"
-           class="font-semibold md:text-lg underline hover:text-white text-black>
+           class="font-semibold md:text-lg underline hover:text-white text-black">
            GitHub
         </a>
       </li>
     </ul>
   `);
 });
+
+// 1 second message
+setTimeout(function() { const mess = document.getElementById('mess');
+   if (mess) {
+     mess.style.display = 'none'; } }, 1500);
+
+
+ function confirmDelete() {
+    return confirm("⚠️ Are you sure you want to delete your account? This action is permanent.");
+  }
