@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReCollection</title>
+    <title>PASTEL MEMORIES</title>
 
     <!-- linking -->
      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -21,7 +21,7 @@
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <!-- Logo image , title -->
   <a href="{% url 'home' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="{% static 'images/logo.png' %}" class="h-14" alt="Logo">
+      <img src="{% static 'images/logo.png' %}" class="h-12" alt="Logo">
       <h1 class="font-cinzel sm:text-sm md:text-3xl font-bold uppercase tracking-widest text-gray-800">   Pastel Memories        </h1>
   </a>
   <!-- User photo -->
@@ -72,13 +72,28 @@
        
       </button>
 
-        <div class="flex flex-wrap gap-4">
-        <a href="{% url 'signUp' %}" class="px-2 py-2 rounded-xl bg-purple-700 text-white font-semibold shadow-sm hover:bg-purple-900 transition cursor-pointer">
-          SIGN UP
-        </a>
-        <a href="{% url 'signIn' %}" class="cursor-pointer px-2 py-2 rounded-xl border-2 border-purple-700 text-purple-800 font-semibold hover:bg-purple-700 hover:text-white transition">
-          SIGN IN
-        </a>
+       <div class="flex flex-row flex-nowrap
+            items-center justify-center
+            gap-2 sm:gap-3 md:gap-4">
+
+        <a href="{% url 'signUp' %}"
+          class="rounded-md font-semibold 
+          bg-purple-700 text-white shadow-sm
+          hover:bg-purple-900 transition cursor-pointer
+          text-xs sm:text-sm md:text-base
+          px-3 py-1.5 sm:px-4 sm:py-2">
+            SIGN UP
+          </a>
+
+        <a href="{% url 'signIn' %}"
+          class="cursor-pointer rounded-md
+          border-2 border-purple-700 text-purple-800 font-semibold
+          hover:bg-purple-700 hover:text-white transition
+          text-xs sm:text-sm md:text-base
+          px-3 py-1.5 sm:px-4 sm:py-2">
+          SIGN IN 
+          </a>
+
       </div>
      <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-user" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
