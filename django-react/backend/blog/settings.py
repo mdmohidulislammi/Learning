@@ -166,13 +166,13 @@ SIMPLE_JWT = {
 CORS_ALLOW_AL_ORIGINS=True
 # Custom Admin Settings
 JAZZMIN_SETTINGS = {
-    "site_title": "Desphixs",
-    "site_header": "Desphixs",
-    "site_brand": "Modern Marketplace ",
+    "site_title": "RoBlog",
+    "site_header": "RoBlog",
+    "site_brand": "Cypher",
     # "site_icon": "images/favicon.ico",
     # "site_logo": "images/logos/logo.jpg",
-    "welcome_sign": "Welcome To Desphixs",
-    "copyright": "Desphixs",
+    "welcome_sign": "Welcome To Roblog",
+    "copyright": "cypher",
     "user_avatar": "images/photos/logo.jpg",
     "topmenu_links": [
         {"name": "Dashboard", "url": "home", "permissions": ["auth.view_user"]},
