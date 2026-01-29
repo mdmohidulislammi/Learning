@@ -59,3 +59,80 @@ def save_user_profile(sender, instance, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
+
+class Category(models.Model):
+    title=models.CharField(max_length=100)
+    image=models.FileField(upload_to='image', null=True, blank=True)
+    slug=models.SlugField(unique=True, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.title
+    def save(self, *args, **kwargs):
+        if self.slug=="" or self.slug==None:
+            self.slug=slugify(self.title)
+
+        super(Category, self).save(*args, **kwargs)
+    def post_count(self):
+        return Post.objects.filter(category=self).count()
+
+class Post(models.Model):
+    STATUS=(
+        ('Active', 'Active'),
+        ('Draft', 'Draft'),
+        ('Disabled', 'Disabled')
+    )
+
+    user=models.ForeignKey(User,on_delete=models.CASCADE)    
+    profile=models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    title=models.CharField(max_length=100)
+    description=models.TextField(blank=True, null=True)
+    image=models.FileField(upload_to='image', blank=True, null=True)
+    status=models.CharField(choices=STATUS,default='Active')
+    views=models.IntegerField(default=0)
+    likes=models.ManyToManyField(User, blank=True, related_name='likes_user')
+    slug=models.SlugField(unique=True, null=True, blank=True)
+    date=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering=["-date"]
+        verbose_name_plural="Post"
+
+    def __str__(self) -> str:
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.slug=="" or self.slug==None:
+            self.slug=slugify(self.title) + "-" + shortuuid.uuid()[:3]
+
+        super(Post, self).save(*args, **kwargs)
+
+
+class Comment(models.Model):
+    post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    name=models.CharField(max_length=100)
+    email=models.CharField(max_length=100)
+    comment=models.TextField(blank=True, null=True)
+    reply=models.TextField(blank=True, null=True)
+    date=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering=["-date"]
+        verbose_name_plural="Comment"
+
+    def __str__(self) -> str:
+        return self.post.title
+    
+class Bookmarks(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)  
+    post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering=["-date"]
+        verbose_name_plural="Post"
+
+    def __str__(self) -> str:
+        return self.post.title
+    
+
+# class Notification(models.Model):
+    # add notification for like, comment, bookmark
