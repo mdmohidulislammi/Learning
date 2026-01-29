@@ -1,5 +1,4 @@
-Today
-create a readme file which is based on leaning from youtube django_reac
+
 Here’s a draft README.md file you can use for your django_react repository, based on the idea of learning Django + React from YouTube tutorials and applying that knowledge into a project:
 
 django_react
