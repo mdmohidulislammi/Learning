@@ -164,6 +164,7 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOW_AL_ORIGINS=True
+AUTH_USER_MODEL='api.User'
 # Custom Admin Settings
 JAZZMIN_SETTINGS = {
     "site_title": "RoBlog",
@@ -171,9 +172,9 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Cypher",
     # "site_icon": "images/favicon.ico",
     # "site_logo": "images/logos/logo.jpg",
-    "welcome_sign": "Welcome To Roblog",
+    "welcome_sign": "Welcome To RoBlog",
     "copyright": "cypher",
-    "user_avatar": "images/photos/logo.jpg",
+    "user_avatar": "logo_org.png",
     "topmenu_links": [
         {"name": "Dashboard", "url": "home", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
@@ -200,16 +201,14 @@ JAZZMIN_SETTINGS = {
         "api.Category":"fas fa-tag",
         "api.Comment":"fas fa-envelope",
         "api.Notification":"fas fa-bell",
-        "api.Bookmark":"fas fa-heart",
-
-        
+        "api.Bookmark":"fas fa-heart",        
     },
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-arrow-circle-right",
     "related_modal_active": False,
     
     "custom_js": None,
-    "show_ui_builder": True,
+    "show_ui_builder": False,
     
     "changeform_format": "horizontal_tabs",
     "changeform_format_overrides": {
