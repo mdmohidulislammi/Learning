@@ -14,7 +14,6 @@ SECRET_KEY = 'django-insecure-_2!xy#-=(jdbp8na83f%yt5(s9zht@4x!3i=unr1a-!^ps+8#u
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -126,9 +125,12 @@ MEDIA_URL='media/'
 MEDIA_ROOT=BASE_DIR/'media'
 
 REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION_CLASSES':(
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-    )
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        
+    ]
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
