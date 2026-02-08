@@ -84,6 +84,7 @@ class Post(models.Model):
 
     user=models.ForeignKey(User,on_delete=models.CASCADE)    
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    category=models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     title=models.CharField(max_length=100)
     description=models.TextField(blank=True, null=True)
     image=models.FileField(upload_to='image', blank=True, null=True)
@@ -128,7 +129,7 @@ class Bookmarks(models.Model):
     date=models.DateTimeField(auto_now_add=True)
     class Meta:
         ordering=["-date"]
-        verbose_name_plural="Post"
+        verbose_name_plural="Bookmarks"
 
     def __str__(self) -> str:
         return self.post.title
