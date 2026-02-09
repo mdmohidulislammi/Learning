@@ -100,3 +100,66 @@ class LikePostApiView(APIView):
             # Can create notification 
             return Response({"message":"Post Liked"}, status=status.HTTP_201_CREATED)
         
+class PostCommentApiView(APIView):
+    @swagger_auto_schema(
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'post_id': openapi.Schema(type=openapi.TYPE_INTEGER), 
+                    'name': openapi.Schema(type=openapi.TYPE_STRING),
+                    'email': openapi.Schema(type=openapi.TYPE_STRING),
+                    'comment': openapi.Schema(type=openapi.TYPE_STRING),
+
+                },
+            ),
+    )
+    def post(self, request):
+        post_id=request.data['post_id']
+        name=request.data['name']
+        email=request.data['email']
+        comment=request.data['comment']
+
+        post=api_models.Post.objects.get(id=post_id)
+
+        api_models.Comment.create(
+            post=post,
+            name=name, 
+            email=email,
+            comment=comment, 
+        )
+        # If Notification added 
+        # api_models.Notificaiton.create(
+        #     post=post,
+        #     name=name, 
+        #     email=email,
+        #     comment=comment, 
+        # )
+        return Response({"message": "Post Commented"}, status=status.HTTP_201_CREATED)
+    
+class BookmarkPostApiView(APIView):
+    @swagger_auto_schema(
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'user_id': openapi.Schema(type=openapi.TYPE_INTEGER), 
+                    'post_id': openapi.Schema(type=openapi.TYPE_INTEGER)
+                },
+            ),
+    )
+    def post(self, request):
+        user_id=request.data['user_id']
+        post_id=request.data['post_id']
+        user=api_models.User.objects.get(id=user_id)
+        post=api_models.Post.objects.get(id=post_id)
+
+        bookmark=api_models.Bookmarks.objects.filter(post=post, user=user)
+        if bookmark:
+            bookmark.delete()
+            return Response({"message":"Post Un_bookmarked"}, status=status.HTTP_200_OK)
+        else:
+            api_models.Bookmarks.objects.create(
+                user=user, 
+                post=post, 
+            )
+            return Response({"message":"Post Bookemarked"}, status=status.HTTP_201_CREATED)
+        
