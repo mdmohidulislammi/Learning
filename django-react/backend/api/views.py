@@ -46,3 +46,57 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         profile=api_models.Profile.objects.get(user=user)
         return profile
     
+class CategoryListApiView(generics.ListAPIView):
+    serializer_class=api_serializer.CategorySerializer
+    permission_classes=[AllowAny]
+
+    def get_queryset(self):
+        return api_models.Category.objects.all()
+    
+class PostCategoryApiView(generics.ListAPIView):
+    serializer_class=api_serializer.PostSerializer
+    permission_classes=[AllowAny]
+    def get_queryset(self):
+        category_slug=self.kwargs['category_slug']
+        category= api_models.Category.objects.get(slug=category_slug)
+        return api_models.Post.objects.filter(category=category, status='Active')
+class PostListApiView(generics.ListAPIView):
+    serializer_class=api_serializer.PostSerializer
+    permission_classes=[AllowAny]
+
+    def get_queryset(self):
+        return api_models.Post.objects.filter(status='Active')
+    
+class PostDetailApiView(generics.ListAPIView):
+    serializer_class=api_serializer.PostSerializer
+    permission_classes=[AllowAny]
+    def get_queryset(self):
+        slug=self.kwargs['slug']
+        post=api_models.Post.objects.get(slug=slug, status='Active')
+        post.view+=1
+        post.save()
+        return post 
+class LikePostApiView(APIView):
+    @swagger_auto_schema(
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'user_id': openapi.Schema(type=openapi.TYPE_INTEGER), 
+                    'post_id': openapi.Schema(type=openapi.TYPE_INTEGER)
+                },
+            ),
+    )
+    def post(self,request):
+        user_id=request.data['user_id']
+        post_id=request.data['post_id']
+        user=api_models.User.objects.get(id=user_id)
+        post=api_models.Post.objects.get(id=post_id)
+
+        if user in post.likes.all():
+            post.likes.remove(user)
+            return Response({"message":"Post Disliked"}, status=status.HTTP_200_OK)
+        else:
+            post.likes.add(user)
+            # Can create notification 
+            return Response({"message":"Post Liked"}, status=status.HTTP_201_CREATED)
+        
