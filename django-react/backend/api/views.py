@@ -184,3 +184,32 @@ class DashboardApiView(generics.ListAPIView):
         queryset=self.get_queryset()
         serializer=self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+class DashboardPostLists(generics.ListAPIView):
+    serializer_class=api_serializer.PostSerializer
+    permission_classes=[AllowAny]
+
+    def get_queryset(self):
+        user_id=self.kwargs['user_id']
+        user=api_models.User.objects.get(id=user_id)
+        return api_models.Post.objects.filter(user=user).order_by("-id")
+    
+
+class DashboardCommentLists(generics.ListAPIView):
+    serializer_class=api_serializer.CommentSerializer
+    permission_classes=[AllowAny]
+
+    def get_queryset(self):
+        user_id=self.kwargs['user_id']
+        user=api_models.User.objects.get(id=user_id)
+        return api_models.Comment.objects.filter(post__user=user)
+    
+class DashboardReplyCommentApiView(APIView):
+    def post(self, request):
+        comment_id=request.data['comment_id']
+        reply=request.data['reply']
+
+        comment=api_models.Comment.objects.get(id=comment_id)
+        comment.reply=reply
+        comment.save()
+        return Response({"message":"Comment response sent"}, status=status.HTTP_201_CREATED)
