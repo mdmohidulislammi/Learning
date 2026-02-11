@@ -239,3 +239,37 @@ class DashboardPostCreateApiView(generics.CreateAPIView):
 
         return Response({"message":"Post Created Successfully"},status=status.HTTP_201_CREATED)
 
+class DashboardPostEditApiView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class=api_serializer.PostSerializer
+    permission_classes=[AllowAny]
+
+    def get_object(self):
+        user_id=self.kwargs['user_id']
+        post_id=self.kwargs['post_id']
+        user=api_models.User.objects.get(id=user_id)
+        return api_models.User.objects.get(id=post_id,user=user)
+    
+    def update(self, request, *args, **kwargs):
+        post_instance=self.get_object()
+
+        user_id=request.data.get("user_id")
+        title=request.data.get("title")
+        image=request.data.get("image")
+        description=request.data.get("description")
+        category_id=request.data.get("category")
+        post_status=request.data.get("status")
+
+        category=api_models.Category.objects.get(id=category_id)
+
+        post_instance.title=title
+        if image !="undefined":
+            post_instance.image=image 
+
+        post_instance.description=description
+        post_instance.category=category
+        post_instance.status=status
+        post_instance.save()
+
+        return Response({"message": "Post Updated Successfully "}, status=status.HTTP_200_OK)
+    
+    
