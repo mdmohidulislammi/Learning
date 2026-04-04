@@ -5,3 +5,31 @@
   margin: auto;
   border: 2px solid gray;
 }
+.counter-container{
+  text-align: center;
+  font-family: sans-serif;
+  border: 1px solid black;
+  box-shadow: 4px 4px 6px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  
+}
+.count-display{
+  font-size: 5em;
+  margin:5%;
+
+}
+.counter-btn{
+  max-width: 250px;
+  height: 50px;
+  font-size: 1.5em;
+  /* margin:5%; */
+  background-color: aquamarine;
+  color: rgb(0, 0, 0);
+  border:none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin: 3%;
+  font-weight: bold;
+}

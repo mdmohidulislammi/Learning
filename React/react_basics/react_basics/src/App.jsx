@@ -3,6 +3,7 @@ import './App.css'
 import Student from './student.jsx'
 import UserGreeting from './UserGreeting.jsx'
 import List from './list.jsx'
+import Counter from './counter.jsx'
 
 function App() {
   const fruits=[{id:1, name:"apple", calories:90},
@@ -30,7 +31,7 @@ function App() {
     <UserGreeting isLoggedIn={true} username="Mohidul"/>
     <List items={fruits} category="Fruits" />
     <List items={vegetables} category="Vegetables" />
-
+     <Counter/>
     </>
   )
 }
