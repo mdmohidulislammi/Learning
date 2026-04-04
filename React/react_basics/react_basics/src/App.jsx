@@ -4,6 +4,7 @@ import Student from './student.jsx'
 import UserGreeting from './UserGreeting.jsx'
 import List from './list.jsx'
 import Counter from './counter.jsx'
+import ColorPicker from './colorPicker.jsx'
 
 function App() {
   const fruits=[{id:1, name:"apple", calories:90},
@@ -32,6 +33,7 @@ function App() {
     <List items={fruits} category="Fruits" />
     <List items={vegetables} category="Vegetables" />
      <Counter/>
+     <ColorPicker/>
     </>
   )
 }
