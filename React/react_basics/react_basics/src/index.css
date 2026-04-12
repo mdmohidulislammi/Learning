@@ -33,3 +33,22 @@
   margin: 3%;
   font-weight: bold;
 }
+.color-picker-container{
+  margin: auto;
+  font-size: 2em;
+  max-width: 500px;
+  max-height: fit-content;
+  border: none;
+  box-shadow: 4px 4px 8px;
+  padding: 10px;
+  align-items: center;
+  text-align: center;
+}
+.color-display{
+  margin: auto;
+  max-width: 300px;
+  align-items: center;
+  text-align: center;
+  border: none;
+  height: 200px;
+}
