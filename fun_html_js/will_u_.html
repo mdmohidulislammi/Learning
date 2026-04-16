@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal</title>
+    
+    <style>
+        body{
+            background-color: #c89bdc;
+        }
+
+        .main-container{
+            text-align: center;
+            margin: auto;
+        }
+
+        .head_text{
+            margin: auto;
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2rem;
+            margin-top: 10%;
+            margin-bottom: 10%;
+        }
+
+        .btns{
+            margin: auto;
+            min-width: 300px;
+            max-width: 450px;
+            min-height: 250px;
+            border: 2px solid;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            background-color: #c082db;
+            box-shadow: 4px 4px 6px;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+            display: flex;
+            gap: 10%;
+            flex-direction: column;
+        }
+
+        .btns p{
+            font-size: 1.5rem;
+        }
+
+        .btn{
+            margin: auto; 
+            display: flex;
+            gap: 20%;
+        }
+
+        .btns button{
+            width: 80px;
+            height: 50px;
+            padding: 5px;
+            font-size: 1.5rem;
+            font-family: fantasy;
+            background-color: #d3aae5;
+            border: none;
+            box-shadow: 3px 3px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btns button:hover{
+            background-color: rgb(217, 87, 234);
+            transform: scale(1.05);
+        }
+
+       
+
+        .cat-scene{
+            display: none;
+            margin-top: 40%;
+            position: relative;
+        }
+
+        .bubble{
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: pop 1.5s ease-in-out infinite alternate;
+        }
+
+        .bubble::after{
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        @keyframes pop{
+            from{ transform: translateX(-50%) scale(1); }
+            to{ transform: translateX(-50%) scale(1.1); }
+        }
+
+        .cat{
+            width: 200px;
+            height: 180px;
+            background: #fff;
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin: auto;
+            box-shadow: inset 0 -10px 0 #eee;
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce{
+            from{ transform: translateY(0); }
+            to{ transform: translateY(-10px); }
+        }
+
+        .ear{
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            position: absolute;
+            top: -30px;
+            border-radius: 10px 50px 0 50px;
+        }
+
+        .ear.left{
+            left: 20px;
+            transform: rotate(-20deg);
+        }
+
+        .ear.right{
+            right: 20px;
+            transform: scaleX(-1) rotate(-20deg);
+        }
+
+        .eye{
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 70px;
+            animation: blink 4s infinite;
+        }
+
+        .eye.left{ left: 55px; }
+        .eye.right{ right: 55px; }
+
+        @keyframes blink{
+            0%,95%,100%{ height: 20px; }
+            97%{ height: 2px; }
+        }
+
+        .nose{
+            width: 14px;
+            height: 10px;
+            background: pink;
+            border-radius: 50%;
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="head_text">Hey, Senorita😍</div>
+        
+        <div class="btns" id="proposal-box">     
+            <p>Will U b my Valentine?</p>       
+            <div class="btn">
+                <button id="btn-1">Yes</button>
+                <button id="btn-2">No</button>
+            </div>
+        </div>
+
+        <div class="cat-scene" id="cat-scene">
+            <div class="bubble">Thank you for accepting! 💖</div>
+
+            <div class="cat">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="nose"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const yesBtn = document.getElementById("btn-1");
+        const noBtn = document.getElementById("btn-2");
+        const catScene = document.getElementById("cat-scene");
+        const proposalBox = document.getElementById("proposal-box");
+
+  
+        yesBtn.addEventListener("click", () => {
+            proposalBox.style.display = "none";
+            catScene.style.display = "block";
+        });
+
+       
+        noBtn.addEventListener("click", () => {
+            noBtn.textContent = "Yes";
+
+            setTimeout(() => {
+                proposalBox.style.display = "none";
+                catScene.style.display = "block";
+            }, 2500);
+        });
+    </script>
+</body>
+</html>
