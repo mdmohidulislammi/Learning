@@ -179,6 +179,13 @@
 <body>
     <div class="main-container">
         <div class="head_text">Hey, Senorita😍</div>
+        <div class="cat" id="primary-cat-scene">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="nose"></div>
+            </div>
         
         <div class="btns" id="proposal-box">     
             <p>Will U b my Valentine?</p>       
@@ -204,6 +211,7 @@
     <script>
         const yesBtn = document.getElementById("btn-1");
         const noBtn = document.getElementById("btn-2");
+        const catScene1=document.getElementById("primary-cat-scene")
         const catScene = document.getElementById("cat-scene");
         const proposalBox = document.getElementById("proposal-box");
 
@@ -211,11 +219,13 @@
         yesBtn.addEventListener("click", () => {
             proposalBox.style.display = "none";
             catScene.style.display = "block";
+            catScene1.style.display="none";
         });
 
        
         noBtn.addEventListener("click", () => {
             noBtn.textContent = "Yes";
+            catScene1.style.display="none";
 
             setTimeout(() => {
                 proposalBox.style.display = "none";
