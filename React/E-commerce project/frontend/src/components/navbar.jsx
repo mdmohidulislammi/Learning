@@ -39,10 +39,10 @@ const Navbar= ()=>{
                 </div>               
               </div>
              </div>
-              <img onClick={()=>setVisible(true)}  src={menu} className="w-10 cursor-pointer sm:hidden" alt="Menu" />
+              <img onClick={()=>setVisible(true)}  src={menu} className="w-10 cursor-pointer  sm:hidden" alt="Menu" />
               {/* sidebar menu for mobile/small screen */}
               <div
-                className={`fixed top-0 right-0 bottom-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ${
+                className={`fixed bg-blend-color-burn top-0 right-0 bottom-0 w-full bg-white ${
                   visible ? "translate-x-0" : "translate-x-full"
                 }`}>
                 {/* Close Button */}
@@ -52,10 +52,10 @@ const Navbar= ()=>{
 
                 {/* Menu Links */}
                 <ul className="flex flex-col gap-6 px-6 text-black font-semibold">
-                  <NavLink to='/' onClick={() => setVisible(false)} className="hover:text-blue-500">HOME</NavLink>
-                  <NavLink to='/categories' onClick={() => setVisible(false)} className="hover:text-blue-500">CATEGORIES</NavLink>
-                  <NavLink to='/about' onClick={() => setVisible(false)} className="hover:text-blue-500">ABOUT</NavLink>
-                  <NavLink to='/contact' onClick={() => setVisible(false)} className="hover:text-blue-500">CONTACT</NavLink>
+                  <NavLink to='/' onClick={() => setVisible(false)} className="hover:text-blue-500 cursor-pointer">HOME</NavLink>
+                  <NavLink to='/categories' onClick={() => setVisible(false)} className="hover:text-blue-500 cursor-pointer">CATEGORIES</NavLink>
+                  <NavLink to='/about' onClick={() => setVisible(false)} className="hover:text-blue-500 cursor-pointer">ABOUT</NavLink>
+                  <NavLink to='/contact' onClick={() => setVisible(false)} className="hover:text-blue-500 cursor-pointer">CONTACT</NavLink>
                 
                 </ul>
               </div>
