@@ -6,20 +6,19 @@ import menuIcon from "../assets/main-menu.png";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(false);      // mobile sidebar
-  const [searchOpen, setSearchOpen] = useState(false); // search bar toggle
+  const [visible, setVisible] = useState(false);      
+  const [searchOpen, setSearchOpen] = useState(false);
   const searchInputRef = useRef(null);
 
   const closeSidebar = () => setVisible(false);
 
-  // Auto-focus search input when opened
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [searchOpen]);
 
-  // Close search on Escape key
+
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") setSearchOpen(false);
@@ -28,14 +27,13 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // Handle search form submit
+
   const handleSearch = (e) => {
     e.preventDefault();
     const query = e.target.search.value.trim();
     if (query) {
       console.log("Searching for:", query);
-      // You can navigate or call an API here
-      // e.g., navigate(`/search?q=${encodeURIComponent(query)}`);
+    
       setSearchOpen(false);
     }
   };
@@ -81,9 +79,9 @@ const Navbar = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-4 sm:gap-6">
-        {/* Search Section */}
+     
         <div className="relative">
-          {/* Search Icon (hidden when search is open) */}
+         
           {!searchOpen && (
             <button
               onClick={() => setSearchOpen(true)}
@@ -94,7 +92,7 @@ const Navbar = () => {
             </button>
           )}
 
-          {/* Search Input Panel */}
+        
           <div
             className={`absolute right-0 top-1/2 -translate-y-1/2 flex items-center bg-white shadow-lg rounded-lg ring-1 ring-gray-200 overflow-hidden transition-all duration-300 ${
               searchOpen
@@ -132,7 +130,7 @@ const Navbar = () => {
                 </svg>
               </button>
             </form>
-            {/* Close button */}
+          
             <button
               onClick={() => setSearchOpen(false)}
               className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
@@ -154,7 +152,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Profile Dropdown (unchanged) */}
+    
         <div className="relative group">
           <button className="cursor-pointer p-1" aria-label="Profile menu">
             <img src={profileIcon} alt="profile" className="w-8 h-auto" />
@@ -169,7 +167,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Hamburger (mobile) */}
+       
         <button
           onClick={() => setVisible(true)}
           className="sm:hidden cursor-pointer p-1"
@@ -181,7 +179,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Sidebar overlay & panel (unchanged) */}
+  
       {visible && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"

@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'drf_yasg'
+    'drf_yasg',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -179,7 +180,7 @@ JAZZMIN_SETTINGS = {
     },    
     
     "show_sidebar": True,
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 }
 
 # Jazzmin Tweaks
@@ -203,8 +204,8 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": True,
-    "theme": "journal",
-    "dark_mode_theme": "darkly",
+    "theme": "solar",
+    "default_theme_mode": "auto",
     "button_classes": {
         "primary": "btn-outline-primary",
         "secondary": "btn-outline-secondary",
