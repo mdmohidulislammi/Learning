@@ -61,3 +61,93 @@ def save_user_profile(sender, instance, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
+
+class Category(models.Model):
+    title=models.CharField(max_length=50)
+    slug=models.SlugField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.title
+    def save(self, *args, **kwargs):
+        if self.slug=="" or self.slug==None:
+            self.slug=slugify(self.title)
+
+        super(Category, self).save(*args, **kwargs)
+    def product_count(self):
+        return Product.objects.filter(category=self).count()
+    
+class Product(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.CASCADE)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(default=0)
+    is_available = models.BooleanField(default=True)
+    min_age = models.PositiveIntegerField()
+    max_age = models.PositiveIntegerField(null=True, blank=True)    
+    # brand = models.CharField(max_length=100, blank=True)
+    slug=models.SlugField(unique=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering=["-created_at"]
+        verbose_name_plural="Products"
+
+    def __str__(self) -> str:
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.slug=="" or self.slug==None:
+            self.slug=slugify(self.title) + "-" + shortuuid.uuid()[:3]
+
+        super(Product, self).save(*args, **kwargs)
+
+    @property
+    def in_stock(self):
+        return self.stock > 0
+
+class ProductImage(models.Model):
+    product=models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    img=models.ImageField(upload_to='productsImage', null=False)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+class Cart(models.Model):  
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, blank=True)
+    session_id = models.CharField(max_length=255, null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        if self.profile:
+            return f"{self.profile.user.username}'s Cart"
+        return f"Cart {self.session_id}"
+
+    @property
+    def total_price(self):
+        return sum(item.total_price for item in self.items.all())
+    
+class CartItem(models.Model):
+    cart = models.ForeignKey(
+        Cart,
+        related_name="items",
+        on_delete=models.CASCADE
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.product.title} ({self.quantity})"
+
+    @property
+    def total_price(self):
+        return self.price * self.quantity
+    
