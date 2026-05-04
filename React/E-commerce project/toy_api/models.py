@@ -7,7 +7,6 @@ from django.core.exceptions import ValidationError
 from phonenumber_field.modelfields import PhoneNumberField
 import shortuuid
 
-
 class User(AbstractUser):
     username = models.CharField(unique=True, max_length=150)
     email = models.EmailField(unique=True)
@@ -217,3 +216,4 @@ class OrderItem(models.Model):
     @property
     def total_price(self):
         return self.unit_price * self.quantity
+    
