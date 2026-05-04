@@ -77,6 +77,10 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+    class Meta:
+        verbose_name_plural = "Category"
+    def product_count(self):
+        return Product.objects.filter(category=self).count()
 
 
 class Product(models.Model):
@@ -95,7 +99,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name_plural = "Products"
+        verbose_name_plural = "Product"
 
     def __str__(self):
         return self.name
@@ -140,8 +144,6 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    # added_at = models.DateTimeField(auto_now_add=True)
-
     class Meta:
         unique_together = ('cart', 'product')
 
