@@ -3,7 +3,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import Token
 
-from toy_api.models import User, Profile, Category, Product, Cart, CartItem, Order, OrderItem
+from toy_api.models import User, Profile, Category, Product, Cart, CartItem, Order, OrderItem, ProductImage
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -19,7 +19,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password2=serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        models=User
+        model=User
         fields=['full_name', 'email', 'password', 'password2']
 
     def validate(self, data):
@@ -31,7 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         email_username, nm=user.email.split("@")
         user.username=email_username
 
-        user.set_password(validate_password['password'])
+        user.set_password(validated_data['password'])
         user.save()
         return user
 
@@ -48,7 +48,37 @@ class CategorySerializer(serializers.ModelSerializer):
         return category.products.count()
     class Meta:
         model=Category
-        fields=['id', 'name', 'slug', 'product_count']
+        fields=['id', 'title', 'slug', 'product_count']
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Product
+        fields="__all__"
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ProductImage
+        fields="__all__"
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Cart
+        fields=['profile', 'session_id', 'created_at']
 
 
-      
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=CartItem
+        fields=['cart', 'product', 'quantity', 'price', 'total_price']
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Order
+        fields="__all__"
+
+class DashboardStatsSerializer(serializers.Serializer):
+    total_users = serializers.IntegerField()
+    total_products = serializers.IntegerField()
+    total_orders = serializers.IntegerField()
+    total_categories = serializers.IntegerField()
+    total_revenue = serializers.DecimalField(max_digits=12, decimal_places=2, coerce_to_string=False)
+    recent_orders = serializers.ListField(child=serializers.DictField())
+   
