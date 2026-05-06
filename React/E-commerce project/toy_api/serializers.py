@@ -49,15 +49,38 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model=Category
         fields=['id', 'title', 'slug', 'product_count']
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Product
-        fields="__all__"
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model=ProductImage
         fields="__all__"
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, required=False)
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'user', 'product_name', 'category', 'description',
+            'price', 'stock', 'is_available', 'min_age', 'max_age',
+            'slug', 'created_at', 'updated_at', 'images'
+        ]
+        read_only_fields = ['id', 'slug', 'created_at', 'updated_at', 'user']
+
+    def create(self, validated_data):
+        images_data = validated_data.pop('images', [])
+        product = Product.objects.create(**validated_data)
+        for image_data in images_data:
+            ProductImage.objects.create(product=product, **image_data)
+        return product
+
+    def validate(self, data):
+        min_age = data.get('min_age')
+        max_age = data.get('max_age')
+        if max_age is not None and min_age > max_age:
+            raise serializers.ValidationError(
+                {'max_age': 'Max age must be >= min age'}
+            )
+        return data
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:

@@ -7,6 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.db.models import Sum,Count
+
 #rf
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -16,7 +17,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework.parsers import MultiPartParser, FormParser
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from datetime import datetime
@@ -65,11 +66,11 @@ class ProductListAPIView(generics.ListAPIView):
 
 class CartListApiView(generics.ListAPIView):
     serializer_class=CartSerializer
-    permission_classes=[AllowAny ]
+    permission_classes=[IsAuthenticated]
 
 class OrderListApiView(generics.ListAPIView):
     serializer_class=OrderSerializer
-    permission_classes=[AllowAny]
+    permission_classes=[IsAuthenticated]
 
 class DashboardStatsView(APIView):
     permission_classes=[IsAuthenticated]
@@ -98,3 +99,119 @@ class DashboardStatsView(APIView):
         serializer = DashboardStatsSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data)
+    
+class DashboardProductListView(generics.ListAPIView):
+    serializer_class=ProductSerializer
+    permission_classes=[AllowAny]
+    def get_queryset(self):
+        user_id=self.kwargs['user_id']
+        user=User.objects.get(id=user_id)
+        return Product.objects.filter(user=user).order_by("-id")
+    
+class DashboardProductCreateApi(generics.CreateAPIView):
+    serializer_class = ProductSerializer
+    parser_classes = [MultiPartParser, FormParser]
+    permission_classes = [IsAuthenticated]
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_staff and 'user_id' in request.data:
+            return Response(
+                {"error": "Only staff can assign a different user."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if 'user_id' not in request.data:
+            request.data._mutable = True
+            request.data['user'] = request.user.id
+            request.data._mutable = False
+        else:
+            user_id = request.data.get('user_id')
+            if not User.objects.filter(id=user_id).exists():
+                return Response(
+                    {"user_id": "User does not exist."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            request.data._mutable = True
+            request.data['user'] = user_id
+            del request.data['user_id']
+            request.data._mutable = False
+
+        category_id = request.data.get('category')
+        if category_id and not Category.objects.filter(id=category_id).exists():
+            return Response(
+                {"category": "Category does not exist."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        return Response(
+            {
+                "message": "Product created successfully.",
+                "product": serializer.data
+            },
+            status=status.HTTP_201_CREATED
+        )
+    def perform_create(self, serializer):
+        serializer.save()
+    
+
+class DashboardProductUpdateApi(generics.UpdateAPIView):
+    serializer_class = ProductSerializer
+    parser_classes = [MultiPartParser, FormParser]
+    permission_classes = [IsAuthenticated]
+    queryset = Product.objects.all()
+    lookup_field = 'id'
+    def update(self, request, *args, **kwargs):
+        product = self.get_object()
+
+        if not request.user.is_staff and product.user.id != request.user.id:
+            return Response(
+                {"error": "You do not have permission to update this product."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        if 'user_id' in request.data:
+            if not request.user.is_staff:
+                return Response(
+                    {"error": "Only staff can reassign product to another user."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+            user_id = request.data.get('user_id')
+            if not User.objects.filter(id=user_id).exists():
+                return Response(
+                    {"user_id": "User does not exist."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            request.data._mutable = True
+            request.data['user'] = user_id
+            del request.data['user_id']
+            request.data._mutable = False
+
+        category_id = request.data.get('category')
+        if category_id and not Category.objects.filter(id=category_id).exists():
+            return Response(
+                {"category": "Category does not exist."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        partial = kwargs.pop('partial', False)
+        serializer = self.get_serializer(product, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if 'images' in request.data:
+            images_data = request.data.getlist('images') if hasattr(request.data, 'getlist') else request.data.get('images', [])
+            if images_data:
+                ProductImage.objects.filter(product=product).delete()
+                for image_data in images_data:
+                    ProductImage.objects.create(product=product, img=image_data)
+
+        return Response({
+            "message": "Product updated successfully.",
+            "product": serializer.data
+        }, status=status.HTTP_200_OK)
+
+    def perform_update(self, serializer):
+        serializer.save()
