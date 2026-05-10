@@ -1,10 +1,60 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-export const App = () => {
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+
+import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
+
+import Home from './pages/Home';
+import About from './pages/About';
+import Collection from './pages/Collection';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Cart from './pages/Cart';
+import Product from './pages/Product';
+import PlaceOrder from './pages/PlaceOrder';
+import Order from './pages/Order';
+
+function App() {
   return (
-    <div>
-      
-    </div>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+            <Navbar />
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/collection' element={<Collection />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/product/:productId' element={<Product />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route
+                path='/place-order'
+                element={
+                  <ProtectedRoute>
+                    <PlaceOrder />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/orders'
+                element={
+                  <ProtectedRoute>
+                    <Order />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
-export default App
+
+export default App;
