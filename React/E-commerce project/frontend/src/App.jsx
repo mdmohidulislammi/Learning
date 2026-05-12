@@ -13,6 +13,7 @@ import Cart from './pages/Cart';
 import Product from './pages/Product';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path='/place-order' element={<PlaceOrder />} />  
               <Route path='/orders' element={<Order />} />
             </Routes>
+            <Footer/>
           </div>
      
     </BrowserRouter>

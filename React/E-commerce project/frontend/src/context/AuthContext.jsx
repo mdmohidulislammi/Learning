@@ -22,7 +22,7 @@ const AuthContextProvider = (props) => {
       category: "Activity Toy",
       age_range: "12–36 months",
       min_age_months: 12,
-      max_age_months: 36,
+      max_age_months: 24,
       price: 399.5,
       stock_quantity: 58,
       description:

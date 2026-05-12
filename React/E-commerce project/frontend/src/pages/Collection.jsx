@@ -1,8 +1,9 @@
 import React from 'react'
+import {AuthContext} from '../context/AuthContext'
 
 export const Collection = () => {
   return (
-    <div>Collection</div>
+    <div></div>
   )
 }
 export default Collection
