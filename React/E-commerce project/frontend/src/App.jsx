@@ -1,9 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
-
-import ProtectedRoute from './components/ProtectedRoute';
+import AuthContextProvider from './context/AuthContext';
 import Navbar from './components/Navbar';
 
 import Home from './pages/Home';
@@ -19,9 +16,7 @@ import Order from './pages/Order';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <CartProvider>
+    <BrowserRouter>     
           <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
             <Navbar />
             <Routes>
@@ -33,26 +28,11 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route
-                path='/place-order'
-                element={
-                  <ProtectedRoute>
-                    <PlaceOrder />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path='/orders'
-                element={
-                  <ProtectedRoute>
-                    <Order />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path='/place-order' element={<PlaceOrder />} />  
+              <Route path='/orders' element={<Order />} />
             </Routes>
           </div>
-        </CartProvider>
-      </AuthProvider>
+     
     </BrowserRouter>
   );
 }
