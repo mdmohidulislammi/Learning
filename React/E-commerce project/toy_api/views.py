@@ -7,8 +7,10 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.db.models import Sum, Count
-
-# rf
+from django.core.mail import send_mail
+from rest_framework.response import Response
+from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
@@ -21,6 +23,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from datetime import datetime
+from django.core.mail import EmailMessage
+import traceback
 
 import json
 import random
@@ -59,15 +63,50 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-class ProfileView(generics.CreateAPIView):
-    permission_classes = [AllowAny]
+class ProfileView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
+    lookup_field = 'user_id'
 
     def get_object(self):
-        user_id = self.kwargs["user_id"]
-        user = User.objects.get(id=user_id)
-        profile = Profile.objects.get(user=user)
+        user_id = self.kwargs['user_id']
+        profile, created = Profile.objects.get_or_create(user_id=user_id)
+        return Profile.objects.get(user__id=user_id)
+
+
+class ProfileUpdateView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfileSerializer
+    lookup_field = 'user_id'
+
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        if self.request.user.id != user_id:
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied("You can only edit your own profile.")
+        profile, _ = Profile.objects.get_or_create(user_id=user_id)
         return profile
+
+    def update(self, request, *args, **kwargs):
+        try:
+            partial = kwargs.pop('partial', False)
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=partial)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+
+            full_name = request.data.get('full_name')
+            if full_name and instance.user.full_name != full_name:
+                instance.user.full_name = full_name
+                instance.user.save(update_fields=['full_name'])
+
+            return Response(serializer.data)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(
+                {"detail": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class CategoryListApiView(generics.ListAPIView):
@@ -93,6 +132,11 @@ class ProductListAPIView(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_staff:
+            return Product.objects.all()
+        return Product.objects.filter(is_available=True)
+
 
 class CartListApiView(generics.ListAPIView):
     serializer_class = CartSerializer
@@ -103,30 +147,71 @@ class OrderListApiView(generics.ListAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return Order.objects.filter(profile__user=self.request.user).order_by('-created_at')
+
+
+class UserListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return User.objects.all()
+        return User.objects.none()
+
+
+class UserUpdateView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    lookup_field = 'id'
+
+    def update(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return Response({"error": "Only staff can update users."}, status=403)
+        return super().update(request, *args, **kwargs)
+
+
+class UserDeleteView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    lookup_field = 'id'
+
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return Response({"error": "Only staff can delete users."}, status=403)
+        user = self.get_object()
+        if user == request.user:
+            return Response({"error": "You cannot delete your own account."}, status=400)
+        user.delete()
+        return Response({"message": "User deleted successfully."}, status=200)
+
 
 class DashboardStatsView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, user_id=None):
+    def get(self, request):
         user = request.user
         if not user.is_staff:
-            return Response({"error": "Unauthorised Login"})
+            return Response({"error": "Unauthorised Login"}, status=403)
         total_users = User.objects.count()
         total_products = Product.objects.count()
         total_orders = Order.objects.count()
         total_categories = Category.objects.count()
-        total_rev = Order.objects.aggregate(total=Sum("total"))["total"] or 0
-        total_sold = OrderItem.objects.aggregate(total=Sum("quantity"))["total"] or 0
-
-        recent_orders = Order.objects.order_by("-created_at")[:5].values(
-            "id", "total", "status", "created_at"
+        total_revenue = Order.objects.aggregate(total=Sum('total'))['total'] or 0
+        recent_orders = list(
+            Order.objects.order_by('-created_at')[:5].values(
+                'id', 'total', 'status', 'created_at'
+            )
         )
+
         data = {
             "total_users": total_users,
             "total_products": total_products,
             "total_orders": total_orders,
             "total_categories": total_categories,
-            "total_revenue": total_rev,
+            "total_revenue": total_revenue,
             "recent_orders": recent_orders,
         }
 
@@ -157,10 +242,10 @@ class DashboardProductCreateApi(generics.CreateAPIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
+        mutable_data = request.data.copy()
+
         if "user_id" not in request.data:
-            request.data._mutable = True
-            request.data["user"] = request.user.id
-            request.data._mutable = False
+            mutable_data["user"] = request.user.id
         else:
             user_id = request.data.get("user_id")
             if not User.objects.filter(id=user_id).exists():
@@ -168,19 +253,21 @@ class DashboardProductCreateApi(generics.CreateAPIView):
                     {"user_id": "User does not exist."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            request.data._mutable = True
-            request.data["user"] = user_id
-            del request.data["user_id"]
-            request.data._mutable = False
+            mutable_data["user"] = user_id
+            mutable_data.pop("user_id", None)
 
-        category_id = request.data.get("category")
+        category_id = mutable_data.get("category")
         if category_id and not Category.objects.filter(id=category_id).exists():
             return Response(
                 {"category": "Category does not exist."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        serializer = self.get_serializer(data=request.data)
+        images = request.FILES.getlist('images')
+        if images:
+            mutable_data['images'] = images
+
+        serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
@@ -266,7 +353,6 @@ class DashboardProductDeleteApi(generics.DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         product = self.get_object()
 
-        # Check permission: staff or owner
         if not request.user.is_staff and product.user.id != request.user.id:
             return Response(
                 {"error": "You do not have permission to delete this product."},
@@ -274,9 +360,156 @@ class DashboardProductDeleteApi(generics.DestroyAPIView):
             )
 
         product.images.all().delete()
-
         self.perform_destroy(product)
 
         return Response(
             {"message": "Product deleted successfully."}, status=status.HTTP_200_OK
         )
+
+
+class AdminOrderListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Order.objects.all().order_by('-created_at')
+        return Order.objects.none()
+
+
+class AdminOrderUpdateView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
+    lookup_field = 'id'
+
+    def update(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return Response({"error": "Only staff can update orders."}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
+
+
+class CreateOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        profile = user.profile
+        
+        items_data = request.data.get('items', [])
+        if not items_data:
+            return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        shipping_address = request.data.get('shipping_address')
+        phone = request.data.get('phone')
+        if not shipping_address or not phone:
+            return Response({"error": "Missing shipping address or phone"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Calculate total and create order
+        total = 0
+        order = Order.objects.create(
+            profile=profile,
+            total=0,  # will update after calculating items
+            shipping_address=shipping_address,
+            phone=phone,
+            status='pending'
+        )
+        
+        for item_data in items_data:
+            try:
+                product = Product.objects.get(id=item_data['id'])
+            except Product.DoesNotExist:
+                return Response({"error": f"Product {item_data['id']} not found"}, status=400)
+            
+            quantity = int(item_data['quantity'])
+            unit_price = product.price
+            item_total = unit_price * quantity
+            total += item_total
+            
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=quantity,
+                unit_price=unit_price
+            )
+            
+            # Reduce stock
+            product.stock -= quantity
+            product.save(update_fields=['stock'])
+        
+        order.total = total
+        order.save(update_fields=['total'])
+        
+        return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def contact_email(request):
+    try:
+        name = request.data.get('name')
+        email = request.data.get('email')
+        message = request.data.get('message')
+
+        if not all([name, email, message]):
+            return Response(
+                {'error': 'All fields are required.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        send_mail(
+            subject=f"Contact from {name}",
+            message=full_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['islamohidul856mi647360@gmail.com'],
+            fail_silently=False,
+        )
+        return Response(
+            {'message': 'Email sent successfully!'},
+            status=status.HTTP_200_OK
+        )
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def send_order_email(request):
+    user_email = request.data.get('email')
+    order = request.data.get('order')
+    if not user_email or not order:
+        return Response({"error": "Missing email or order data"}, status=400)
+
+    subject = f"Order Confirmation #{order['id']}"
+    message = f"""
+    Hello {order.get('userName', 'Customer')},
+
+    Thank you for your order!
+
+    Order ID: {order['id']}
+    Total: {order['total']} BDT
+    Delivery Address: {order['address']}
+    Phone: {order['phone']}
+
+    Items:
+    """
+    for item in order['items']:
+        message += f"\n- {item['product_name']} x{item['quantity']} = {item['price'] * item['quantity']} BDT"
+    message += "\n\nYour order will be processed soon.\n\nToyee Team"
+
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user_email],
+            fail_silently=False,
+        )
+        return Response({"message": "Email sent successfully"})
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)

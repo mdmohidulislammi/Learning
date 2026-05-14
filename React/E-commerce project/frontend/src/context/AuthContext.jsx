@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useRef, useMemo } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 export { AuthContext };
@@ -6,180 +7,178 @@ export { AuthContext };
 const AuthContextProvider = (props) => {
   const currency = "BDT";
   const delivery_fee = 50;
-  const products = [
-    {
-      name: "Rainbow Silicone Teether",
-      category: "Teethers",
-      age_range: "3–12 months",
-      min_age_months: 3,
-      max_age_months: 12,
-      price: 999,
-      stock_quantity: 145,
-      description: "Easy-to-grip rainbow-shaped teether with textured surfaces to soothe sore gums. Dishwasher safe.",
-    },
-    {
-      name: "Wooden Activity Cube",
-      category: "Activity Toys",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 3995,
-      stock_quantity: 58,
-      description: "5-sided cube with bead maze, shape sorter, spinning gears, and animal sliders. Develops motor skills.",
-    },
-    {
-      name: "Fluffy Bunny Stuffed Animal",
-      category: "Stuffed Animals",
-      age_range: "0–24 months",
-      min_age_months: 0,
-      max_age_months: 24,
-      price: 1299,
-      stock_quantity: 89,
-      description: "Super soft hypoallergenic plush bunny, machine washable, perfect cuddle companion for newborns.",
-    },
-    {
-      name: "Musical Xylophone",
-      category: "Musical Toys",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 2499,
-      stock_quantity: 34,
-      description: "Colorful 8-note xylophone with mallet. Encourages rhythm and hand-eye coordination.",
-    },
-    {
-      name: "Pull Along Duck",
-      category: "Push & Pull Toys",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 1599,
-      stock_quantity: 42,
-      description: "Waddling wooden duck on wheels, makes gentle clicking sounds when pulled. Develops walking skills.",
-    },
-    {
-      name: "Soft Doll – Lila",
-      category: "Soft Dolls",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 1899,
-      stock_quantity: 27,
-      description: "Baby-safe cloth doll with embroidered face, removable onesie, and soft huggable body.",
-    },
-    {
-      name: "Stacking Rings",
-      category: "Activity Toys",
-      age_range: "6–18 months",
-      min_age_months: 6,
-      max_age_months: 18,
-      price: 799,
-      stock_quantity: 112,
-      description: "Classic rocking base stacking rings with different textures and colors. Teaches size sequencing.",
-    },
-    {
-      name: "Teething Keys",
-      category: "Teethers",
-      age_range: "3–12 months",
-      min_age_months: 3,
-      max_age_months: 12,
-      price: 599,
-      stock_quantity: 203,
-      description: "BPA-free silicone keys, easy to grasp, relieves gum pain, comes with storage case.",
-    },
-    {
-      name: "Activity Walker",
-      category: "Push & Pull Toys",
-      age_range: "9–24 months",
-      min_age_months: 9,
-      max_age_months: 24,
-      price: 4599,
-      stock_quantity: 15,
-      description: "Convertible walker with removable activity panel, lights, and sounds. Supports first steps.",
-    },
-    {
-      name: "Panda Plush",
-      category: "Stuffed Animals",
-      age_range: "0–36 months",
-      min_age_months: 0,
-      max_age_months: 36,
-      price: 1099,
-      stock_quantity: 76,
-      description: "Adorable 12-inch panda bear, made from recycled materials. Safe for all ages.",
-    },
-    {
-      name: "Drum Set for Toddlers",
-      category: "Musical Toys",
-      age_range: "18–48 months",
-      min_age_months: 18,
-      max_age_months: 48,
-      price: 3499,
-      stock_quantity: 22,
-      description: "Mini drum set with two drumsticks, tambourine, and maracas. Great for sensory play.",
-    },
-    {
-      name: "Soft Doll – Ethan",
-      category: "Soft Dolls",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 1899,
-      stock_quantity: 31,
-      description: "Machine-washable cloth doll, neutral outfit, perfect for nurturing play.",
-    },
-    {
-      name: "Shape Sorter Truck",
-      category: "Activity Toys",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 2199,
-      stock_quantity: 46,
-      description: "Wooden truck with shape sorting blocks. Helps with problem-solving and fine motor skills.",
-    },
-    {
-      name: "Hedgehog Teether",
-      category: "Teethers",
-      age_range: "3–12 months",
-      min_age_months: 3,
-      max_age_months: 12,
-      price: 699,
-      stock_quantity: 178,
-      description: "Soft silicone hedgehog teether with multiple textured surfaces for sore gums.",
-    },
-    {
-      name: "Push Car",
-      category: "Push & Pull Toys",
-      age_range: "12–36 months",
-      min_age_months: 12,
-      max_age_months: 36,
-      price: 1299,
-      stock_quantity: 64,
-      description: "Wooden push car with silent wheels, helps build gross motor skills.",
-    },
-    {
-      name: "Elephant Musical Toy",
-      category: "Musical Toys",
-      age_range: "6–24 months",
-      min_age_months: 6,
-      max_age_months: 24,
-      price: 1899,
-      stock_quantity: 39,
-      description: "Plush elephant that plays lullabies and glows softly. Batteries included.",
-    },
-  ];
 
-  const value = {
-    products,
-    currency,
-    delivery_fee,
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const tokenRef = useRef(token);
+  useEffect(() => {
+    tokenRef.current = token;
+  }, [token]);
+
+  const api = useMemo(() => {
+    const instance = axios.create({
+      baseURL: "http://localhost:8000/api",
+    });
+    instance.interceptors.request.use((config) => {
+      if (tokenRef.current) {
+        config.headers.Authorization = `Bearer ${tokenRef.current}`;
+      }
+      return config;
+    });
+    return instance;
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          axios.get("http://localhost:8000/api/products/"),
+          axios.get("http://localhost:8000/api/products/category/list/"),
+        ]);
+        setProducts(productsRes.data);
+        setCategories(categoriesRes.data);
+      } catch (err) {
+        console.error("Failed to fetch products/categories", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const userId = payload.user_id;
+        const res = await api.get(`/user/profile/${userId}/`);
+        setUser(res.data);
+      } catch (err) {
+        console.error("User load failed", err);
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUser();
+  }, [token, api]);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const login = async (email, password) => {
+    try {
+      const res = await axios.post("http://localhost:8000/api/user/token/", { email, password });
+      localStorage.setItem("access_token", res.data.access);
+      localStorage.setItem("refresh_token", res.data.refresh);
+      setToken(res.data.access);
+      return { success: true };
+    } catch (err) {
+      return {
+        success: false,
+        error: err.response?.data?.detail || "Invalid email or password",
+      };
+    }
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  const register = async (email, password, fullName, location, country, phone) => {
+    try {
+      await axios.post("http://localhost:8000/api/user/register/", {
+        full_name: fullName,
+        email,
+        password,
+        password2: password,
+        location: location || "",
+        country: country || "",
+        cell: phone || "",
+      });
+      return await login(email, password);
+    } catch (err) {
+      const errorMsg = err.response?.data?.detail ||
+                       err.response?.data?.password?.[0] ||
+                       "Registration failed";
+      return { success: false, error: errorMsg };
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
+  };
+
+  const refreshUser = async () => {
+    if (!token) return;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const userId = payload.user_id;
+      const res = await api.get(`/user/profile/${userId}/`);
+      setUser(res.data);
+      return res.data;
+    } catch (err) {
+      console.error("Refresh user failed", err);
+      return null;
+    }
+  };
+
+  const addToCart = (product, quantity = 1) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+        );
+      } else {
+        return [...prev, { ...product, quantity }];
+      }
+    });
+  };
+
+  const removeFromCart = (id) => setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const updateQuantity = (id, qty) => {
+    if (qty < 1) return;
+    setCartItems((prev) => prev.map((item) => (item.id === id ? { ...item, quantity: qty } : item)));
+  };
+  const getCartTotal = () => cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const getCartCount = () => cartItems.reduce((sum, i) => sum + i.quantity, 0);
+  const clearCart = () => setCartItems([]);
+
+  const value = {
+    currency,
+    delivery_fee,
+    user,
+    token,
+    loading,
+    products,
+    categories,
+    cartItems,
+    login,
+    register,
+    logout,
+    refreshUser,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    getCartTotal,
+    getCartCount,
+    clearCart,
+    api,
+  };
+
+  return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;
 };
 
 export default AuthContextProvider;

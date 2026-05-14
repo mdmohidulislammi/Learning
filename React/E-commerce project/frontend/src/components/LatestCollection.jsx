@@ -20,13 +20,14 @@ export const LatestCollection = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
-        {latestProducts.map((item, index) => (
+        {latestProducts.map((item) => (
           <ProductItem
-            key={item.name || index}
-            id={index}
-            name={item.name}
+            key={item.id}
+            id={item.id}
+            name={item.product_name}      // API returns product_name
             price={item.price}
             description={item.description}
+            image={item.images?.[0]?.img_url} // first image URL
           />
         ))}
       </div>

@@ -9,11 +9,12 @@ export const LittleBaby = () => {
 
   useEffect(() => {
     if (!products || products.length === 0) return;
+    // Filter products suitable for babies up to 24 months
     const filtered = products.filter(
-      (item) => item.max_age_months <= 24       //24 months
+      (item) => item.max_age <= 24
     );
     setNewBorn(filtered.slice(0, 5));
-  }, [products]); 
+  }, [products]);
 
   return (
     <div className="my-10">
@@ -24,13 +25,14 @@ export const LittleBaby = () => {
         </p>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
-        {newBorn.map((item, index) => (
+        {newBorn.map((item) => (
           <ProductItem
-            key={item.id || item.name || index} 
-            id={item.id || index}
-            name={item.name}
+            key={item.id}
+            id={item.id}
+            name={item.product_name}
             price={item.price}
             description={item.description}
+            image={item.images?.[0]?.img_url}
           />
         ))}
       </div>
