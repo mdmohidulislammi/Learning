@@ -70,8 +70,8 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         user_id = self.kwargs['user_id']
-        profile, created = Profile.objects.get_or_create(user_id=user_id)
-        return Profile.objects.get(user__id=user_id)
+        profile, _ = Profile.objects.select_related('user').get_or_create(user_id=user_id)
+        return profile
 
 
 class ProfileUpdateView(generics.RetrieveUpdateAPIView):
@@ -84,7 +84,7 @@ class ProfileUpdateView(generics.RetrieveUpdateAPIView):
         if self.request.user.id != user_id:
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("You can only edit your own profile.")
-        profile, _ = Profile.objects.get_or_create(user_id=user_id)
+        profile, _ = Profile.objects.select_related('user').get_or_create(user_id=user_id)
         return profile
 
     def update(self, request, *args, **kwargs):
@@ -123,9 +123,10 @@ class ProductCategoryListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         category_slug = self.kwargs["category_slug"]
-        category = Category.objects.get(slug=category_slug)
-        product = Product.objects.filter(category=category, is_available=True)
-        return product
+        return Product.objects.filter(
+            category__slug=category_slug,
+            is_available=True
+        ).select_related('category').prefetch_related('images')
 
 
 class ProductListAPIView(generics.ListAPIView):
@@ -133,14 +134,18 @@ class ProductListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
+        base_qs = Product.objects.select_related('category').prefetch_related('images')
         if self.request.user and self.request.user.is_staff:
-            return Product.objects.all()
-        return Product.objects.filter(is_available=True)
+            return base_qs
+        return base_qs.filter(is_available=True)
 
 
 class CartListApiView(generics.ListAPIView):
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cart.objects.filter(profile__user=self.request.user).select_related('profile')
 
 
 class OrderListApiView(generics.ListAPIView):
@@ -148,7 +153,11 @@ class OrderListApiView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Order.objects.filter(profile__user=self.request.user).order_by('-created_at')
+        return Order.objects.filter(
+            profile__user=self.request.user
+        ).select_related('profile__user').prefetch_related(
+            'items__product__images'
+        ).order_by('-created_at')
 
 
 class UserListView(generics.ListAPIView):
@@ -195,15 +204,17 @@ class DashboardStatsView(APIView):
         user = request.user
         if not user.is_staff:
             return Response({"error": "Unauthorised Login"}, status=403)
+
         total_users = User.objects.count()
         total_products = Product.objects.count()
         total_orders = Order.objects.count()
         total_categories = Category.objects.count()
         total_revenue = Order.objects.aggregate(total=Sum('total'))['total'] or 0
+
         recent_orders = list(
-            Order.objects.order_by('-created_at')[:5].values(
-                'id', 'total', 'status', 'created_at'
-            )
+            Order.objects.select_related('profile__user')
+            .order_by('-created_at')[:5]
+            .values('id', 'total', 'status', 'created_at')
         )
 
         data = {
@@ -226,8 +237,7 @@ class DashboardProductListView(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs["user_id"]
-        user = User.objects.get(id=user_id)
-        return Product.objects.filter(user=user).order_by("-id")
+        return Product.objects.filter(user_id=user_id).select_related('category').prefetch_related('images').order_by("-id")
 
 
 class DashboardProductCreateApi(generics.CreateAPIView):
@@ -373,7 +383,9 @@ class AdminOrderListView(generics.ListAPIView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return Order.objects.all().order_by('-created_at')
+            return Order.objects.select_related('profile__user').prefetch_related(
+                'items__product__images'
+            ).order_by('-created_at')
         return Order.objects.none()
 
 
@@ -395,51 +407,51 @@ class CreateOrderView(APIView):
     def post(self, request):
         user = request.user
         profile = user.profile
-        
+
         items_data = request.data.get('items', [])
         if not items_data:
             return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         shipping_address = request.data.get('shipping_address')
         phone = request.data.get('phone')
         if not shipping_address or not phone:
             return Response({"error": "Missing shipping address or phone"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Calculate total and create order
-        total = 0
+
+        product_ids = [item['id'] for item in items_data]
+        products = {p.id: p for p in Product.objects.select_related('category').filter(id__in=product_ids)}
+        missing = set(product_ids) - set(products.keys())
+        if missing:
+            return Response({"error": f"Products not found: {missing}"}, status=400)
+
         order = Order.objects.create(
             profile=profile,
-            total=0,  # will update after calculating items
+            total=0,
             shipping_address=shipping_address,
             phone=phone,
             status='pending'
         )
-        
+
+        order_items = []
+        total = 0
         for item_data in items_data:
-            try:
-                product = Product.objects.get(id=item_data['id'])
-            except Product.DoesNotExist:
-                return Response({"error": f"Product {item_data['id']} not found"}, status=400)
-            
+            product = products[item_data['id']]
             quantity = int(item_data['quantity'])
             unit_price = product.price
             item_total = unit_price * quantity
             total += item_total
-            
-            OrderItem.objects.create(
+            order_items.append(OrderItem(
                 order=order,
                 product=product,
                 quantity=quantity,
                 unit_price=unit_price
-            )
-            
-            # Reduce stock
+            ))
             product.stock -= quantity
             product.save(update_fields=['stock'])
-        
+
+        OrderItem.objects.bulk_create(order_items)
         order.total = total
         order.save(update_fields=['total'])
-        
+
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
 

@@ -166,7 +166,7 @@ const UserProfile = () => {
         <button
           type="submit"
           disabled={saving}
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:bg-gray-400"
+          className="w-full  cursor-pointer bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:bg-gray-400"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

@@ -12,10 +12,14 @@ export const Product = () => {
   const [mainImage, setMainImage] = useState("");
 
   useEffect(() => {
-    const found = products?.find((item) => item.id.toString() === productId);
+    if (!products) return;
+    const found = products.find((item) => item.id.toString() === productId);
     if (found) {
       setProductData(found);
-      const firstImage = found.images?.[0]?.img_url || PLACEHOLDER_IMG;
+      let firstImage = found.images?.[0]?.img_url || PLACEHOLDER_IMG;
+      if (firstImage.startsWith('/')) {
+        firstImage = `http://localhost:8000${firstImage}`;
+      }
       setMainImage(firstImage);
     } else {
       setProductData(null);
@@ -31,10 +35,15 @@ export const Product = () => {
   }
 
   const imageList = productData.images?.length
-    ? productData.images.map(img => img.img_url)
+    ? productData.images.map(img => {
+        let url = img.img_url;
+        if (url && url.startsWith('/')) {
+          url = `http://localhost:8000${url}`;
+        }
+        return url;
+      })
     : [PLACEHOLDER_IMG];
 
-  // Format age range
   const ageDisplay = productData.max_age
     ? `${productData.min_age} – ${productData.max_age} months`
     : `${productData.min_age}+ months`;
@@ -42,7 +51,6 @@ export const Product = () => {
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        {/* Images section */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
           <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal gap-2 sm:gap-3">
             {imageList.map((imgUrl, idx) => (
@@ -66,28 +74,16 @@ export const Product = () => {
           </div>
         </div>
 
-        {/* Product info */}
         <div className="flex-1">
           <h1 className="font-medium text-2xl mt-2">{productData.product_name}</h1>
-          
-          {/* Category and Age badges */}
           <div className="flex flex-wrap gap-2 mt-3">
-            <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">
-               {productData.category_title || "Uncategorized"}
-            </span>
-            <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">
-               {ageDisplay}
-            </span>
+            <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">📂 {productData.category_title || "Uncategorized"}</span>
+            <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">👶 {ageDisplay}</span>
           </div>
-
           <div className="flex items-center gap-1 mt-2">
-            <p className="text-green-600 font-medium">
-              {productData.stock > 0 ? "In Stock ✅" : "Out of Stock ❌"}
-            </p>
+            <p className="text-green-600 font-medium">{productData.stock > 0 ? "In Stock ✅" : "Out of Stock ❌"}</p>
           </div>
-          <p className="mt-5 text-3xl font-medium">
-            {productData.price} {currency}
-          </p>
+          <p className="mt-5 text-3xl font-medium">{productData.price} {currency}</p>
           <p className="mt-5 text-gray-500 md:w-4/5">{productData.description}</p>
           <button
             onClick={() => addToCart(productData, 1)}
@@ -114,7 +110,6 @@ export const Product = () => {
         </div>
       </div>
 
-      {/* Related products */}
       <RelatedProduct category={productData.category_title} currentProductId={productData.id} />
     </div>
   );

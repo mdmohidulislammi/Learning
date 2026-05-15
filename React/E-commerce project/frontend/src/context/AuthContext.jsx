@@ -36,21 +36,21 @@ const AuthContextProvider = (props) => {
     return instance;
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [productsRes, categoriesRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/products/"),
-          axios.get("http://localhost:8000/api/products/category/list/"),
-        ]);
-        setProducts(productsRes.data);
-        setCategories(categoriesRes.data);
-      } catch (err) {
-        console.error("Failed to fetch products/categories", err);
-      }
-    };
-    fetchData();
-  }, []);
+ useEffect(() => {
+  const fetchProductsAndCategories = async () => {
+    try {
+      const [productsRes, categoriesRes] = await Promise.all([
+        axios.get("http://localhost:8000/api/products/"),
+        axios.get("http://localhost:8000/api/products/category/list/"),
+      ]);
+      setProducts(productsRes.data);
+      setCategories(categoriesRes.data);
+    } catch (err) {
+      console.error("Failed to fetch products/categories", err);
+    }
+  };
+  fetchProductsAndCategories();
+}, []);
 
   useEffect(() => {
     const loadUser = async () => {

@@ -6,7 +6,10 @@ const PLACEHOLDER_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000
 
 const ProductItem = ({ id, name, price, image }) => {
   const { currency } = useContext(AuthContext);
-  const imgSrc = image && image.trim() !== "" ? image : PLACEHOLDER_IMG;
+  let imgSrc = image && image.trim() !== "" ? image : PLACEHOLDER_IMG;
+  if (imgSrc.startsWith('/')) {
+    imgSrc = `http://localhost:8000${imgSrc}`;
+  }
 
   return (
     <Link to={`/product/${id}`} className="text-gray-700 cursor-pointer group">
@@ -16,6 +19,7 @@ const ProductItem = ({ id, name, price, image }) => {
           src={imgSrc}
           alt={name || "Product"}
           loading="lazy"
+          onError={(e) => (e.target.src = PLACEHOLDER_IMG)}
         />
       </div>
       <p className="pt-3 pb-1 text-sm font-medium text-gray-800">{name || "Unnamed Product"}</p>
